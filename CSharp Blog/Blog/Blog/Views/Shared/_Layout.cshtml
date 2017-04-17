@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Kosyo Vachov`s Blog</title>
+    <title>@ViewBag.Title - Личен блог на Косьо Вачков</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -17,7 +17,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Kosyo Vachkov`s Blog", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("БлогЪТ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="nav navbar-nav">
+                @Html.ActionLink("Начало", "Index", "Home" )
+                @Html.ActionLink("Статии", "Index", "Articles")
+                @Html.ActionLink("Нова статия", "Create", "Articles")
             </div>
             <div class="navbar-collapse collapse">
 
@@ -30,7 +35,7 @@
         @RenderBody()
 
         <footer class="pull-right">
-            <p>&copy; @DateTime.Now.Year - Kosyo Vachkov`s Blog</p>
+            <p>&copy; @DateTime.Now.Year - Личен блог на Косьо Вачков</p>
         </footer>
     </div>
 

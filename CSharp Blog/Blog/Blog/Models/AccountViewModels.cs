@@ -71,17 +71,17 @@ namespace Blog.Models
 
         [Required]
         [StringLength(100, MinimumLength = 1)]
-        [Display(Name = "Full name")]
+        [Display(Name = "Пълно име")]
         public string FullName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 1)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Парола")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Повтори паролата")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }

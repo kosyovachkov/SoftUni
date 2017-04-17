@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Blog.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,11 @@ namespace Blog.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+
+            var database = new BlogDbContext();
+
+            var articles = database.Articles.OrderByDescending(a => a.Date).Take(4);
+            return View(articles.ToList());
         }
 
         public ActionResult About()
