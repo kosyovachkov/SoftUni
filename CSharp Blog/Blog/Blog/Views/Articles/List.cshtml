@@ -7,11 +7,9 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Списък на всички статии</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<hr>
 <table class="table">
     <tr>
         <th>
@@ -44,7 +42,7 @@
             <td>
                 @if (item.Author != null)
                 {
-                    @item.Author.UserName;
+                    @item.Author.FullName;
                 }
                 else
                 {
@@ -53,9 +51,14 @@
 
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Детайли", "Details", new { id = item.Id }) |
+                @if (User.Identity.Name == item.Author.UserName || User.IsInRole("Administrators"))
+                {
+                    @Html.ActionLink("Редактирай", "Edit", new { id = item.Id });
+                    @:|
+                    @Html.ActionLink("Изтрий", "Delete", new { id = item.Id })
+                }
+
             </td>
         </tr>
     }

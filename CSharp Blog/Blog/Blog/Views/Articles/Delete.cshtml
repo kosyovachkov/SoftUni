@@ -4,45 +4,43 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
+<div class="container">
+    <div class="well" style="background-color:antiquewhite; border:1px solid red">
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Article</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+        <h2>Изтриване</h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
+        <article>
+            <header>
+                <h2>
+                    @Model.Title
+                </h2>
+            </header>
+            <small class="author ">
+                Публикувано
+                @if (Model.Author != null)
+            {
+                    @:от
+                    <i>@Model.Author.FullName (@Model.Author.UserName)</i>
+                }
+                на <i>@Model.Date</i>
+            </small>
+            <p>
+<p>
+                @Model.Content
+            </p>
+            
+        </article>
 
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
+        @using (Html.BeginForm())
+            {
+            @Html.AntiForgeryToken()
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                @Html.ActionLink("Начало", "Index", "Home", null, new { @class = "btn btn-default" })
+            </div>
+        }
+    </div>
 </div>
+

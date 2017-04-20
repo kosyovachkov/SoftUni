@@ -28,10 +28,15 @@ namespace Blog.Models
         public string Content { get; set; }
 
         [Display(Name = "Дата")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
 
+        [ForeignKey("Author")]
+        public string AuthorId { get; set; }
+
         [Display(Name = "Автор")]
-        public ApplicationUser Author { get; set; }
+        public virtual ApplicationUser Author { get; set; }
     }
 
 

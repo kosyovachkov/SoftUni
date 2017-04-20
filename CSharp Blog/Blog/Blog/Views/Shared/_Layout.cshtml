@@ -19,13 +19,15 @@
                 </button>
                 @Html.ActionLink("БлогЪТ", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="nav navbar-nav">
-                @Html.ActionLink("Начало", "Index", "Home" )
-                @Html.ActionLink("Статии", "Index", "Articles")
-                @Html.ActionLink("Нова статия", "Create", "Articles")
-            </div>
             <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li> @Html.ActionLink("Всички статии", "List", "Articles")</li>
+                        <li> @Html.ActionLink("Нова статия", "Create", "Articles")</li>
+                    }
 
+                </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
@@ -33,7 +35,7 @@
 
     <div class="container body-content">
         @RenderBody()
-
+        <hr>
         <footer class="pull-right">
             <p>&copy; @DateTime.Now.Year - Личен блог на Косьо Вачков</p>
         </footer>

@@ -18,8 +18,13 @@ namespace Blog.Controllers
     {
         private BlogDbContext db = new BlogDbContext();
 
-        // GET: Articles
         public ActionResult Index()
+        {
+            return RedirectToAction("List");
+        }
+
+        // GET: Articles
+        public ActionResult List()
         {
             var articlesWithAuthors = db.Articles
                 .Include(a => a.Author)
@@ -43,6 +48,7 @@ namespace Blog.Controllers
         }
 
         // GET: Articles/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -52,8 +58,9 @@ namespace Blog.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Content,Date")] Article article)
+        public ActionResult Create([Bind(Include = "Id,Title,Content")] Article article)
         {
             if (ModelState.IsValid)
             {
@@ -62,13 +69,14 @@ namespace Blog.Controllers
 
                 db.Articles.Add(article);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
 
             return View(article);
         }
 
         // GET: Articles/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -80,12 +88,16 @@ namespace Blog.Controllers
             {
                 return HttpNotFound();
             }
+
+            var authors = db.Users.ToList();
+            ViewBag.Authors = authors;
             return View(article);
         }
 
         // POST: Articles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,Content,Date")] Article article)
@@ -100,6 +112,7 @@ namespace Blog.Controllers
         }
 
         // GET: Articles/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -115,6 +128,7 @@ namespace Blog.Controllers
         }
 
         // POST: Articles/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -7,24 +7,25 @@
 @model List<Article>
 
 
-    <section class="row">
-        @foreach (var article in Model)
-        {
-            <article class="post col-md-6">
-                <h2 class="title">@article.Title</h2>
-                <div class="about">
-                    Публикувано
-                    @if (article.Author != null)
+<section class="row">
+    @foreach (var article in Model)
+    {
+        <article class="post col-md-6">
+            <h2 class="title">@Html.ActionLink(article.Title, "Details", "Articles", new { @id = article.Id }, null)</h2>
+            <small class="author ">
+                Публикувано
+                @if (article.Author != null)
                 {
-                        @:от
-                        <i>@article.Author.FullName (@article.Author.UserName)</i>
-                    }
-                    на <i>@article.Date</i>
-                </div>
-                <div class="body">
-                    @Utils.CutArticle(@Html.Raw(article.Content).ToString())
-                    
-                </div>
-            </article>
-        }
-    </section>
+                    @:от
+                    <i>@article.Author.FullName (@article.Author.UserName)</i>
+                }
+                на <i>@article.Date</i>
+            </small>
+            <p>
+            <div class="body">
+                @Utils.CutArticle(article.Content)
+
+            </div>
+        </article>
+    }
+</section>
