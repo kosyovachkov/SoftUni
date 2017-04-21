@@ -9,27 +9,22 @@ namespace Blog.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
 
             var database = new BlogDbContext();
 
-            var articles = database.Articles.OrderByDescending(a => a.Date).Take(4);
-            return View(articles.ToList());
+            var pageSize = 4;
+
+            var articles = database.Articles.OrderByDescending(a => a.Date).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            ViewBag.CurrentPage = page;
+
+            return View(articles);
+
+            
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
+        
     }
 }

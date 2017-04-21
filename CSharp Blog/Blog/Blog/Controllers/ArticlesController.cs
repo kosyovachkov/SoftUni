@@ -18,9 +18,12 @@ namespace Blog.Controllers
     {
         private BlogDbContext db = new BlogDbContext();
 
-        public ActionResult Index()
+        public ActionResult All()
         {
-            return RedirectToAction("List");
+            var articlesWithAuthors = db.Articles
+                .Include(a => a.Author)
+                .ToList();
+            return View(articlesWithAuthors);
         }
 
         // GET: Articles
