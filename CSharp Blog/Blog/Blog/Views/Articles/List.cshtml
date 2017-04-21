@@ -52,7 +52,7 @@
             </td>
             <td>
                 @Html.ActionLink("Детайли", "Details", new { id = item.Id }) |
-                @if (User.Identity.Name == item.Author.UserName || User.IsInRole("Administrators"))
+                @if (User.Identity.Name.Equals(item.Author.UserName) || User.IsInRole("Administrators"))
                 {
                     @Html.ActionLink("Редактирай", "Edit", new { id = item.Id });
                     @:|

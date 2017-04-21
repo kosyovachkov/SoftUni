@@ -84,6 +84,12 @@ namespace Blog.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Article article = db.Articles.Find(id);
+
+            //if (!User.Identity.Name.Equals(article.Author.UserName) || !User.IsInRole("Administrators"))
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            //}
+
             if (article == null)
             {
                 return HttpNotFound();
@@ -100,13 +106,14 @@ namespace Blog.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Content,Date")] Article article)
+        public ActionResult Edit([Bind(Include = "Id,Title,Content,Date,AuthorId")] Article article)
         {
             if (ModelState.IsValid)
             {
+                
                 db.Entry(article).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Home");
             }
             return View(article);
         }
@@ -134,9 +141,15 @@ namespace Blog.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Article article = db.Articles.Find(id);
+
+            if (!User.Identity.Name.Equals(article.Author.UserName) || !User.IsInRole("Administrators"))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
             db.Articles.Remove(article);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         protected override void Dispose(bool disposing)

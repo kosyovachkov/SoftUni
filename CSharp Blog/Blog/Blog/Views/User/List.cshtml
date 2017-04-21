@@ -1,0 +1,35 @@
+﻿@model List<Blog.Models.ApplicationUser>
+@{
+    ViewBag.Title = "List";
+}
+
+<div class="container">
+    <div class="well">
+        <h2>List</h2>
+        <table class="table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Номер</th>
+                    <th>Потребителско име</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.UserName</td>
+                        <td>
+                            @Html.ActionLink("Редактирай", "Edit", "User")
+                            @Html.ActionLink("Изтрий", "Delete", "User")
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
