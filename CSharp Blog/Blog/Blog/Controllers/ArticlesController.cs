@@ -63,12 +63,14 @@ namespace Blog.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Content")] Article article)
+        public ActionResult Create([Bind(Include = "Id,Title,Content, Image")] Article article)
         {
             if (ModelState.IsValid)
             {
                 article.Author = db.Users
                     .FirstOrDefault(u => u.UserName == User.Identity.Name);
+
+
 
                 db.Articles.Add(article);
                 db.SaveChanges();

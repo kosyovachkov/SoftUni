@@ -32,6 +32,10 @@ namespace Blog.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
 
+        [Url]
+        [Display(Name = "Прикачи снимка")]
+        public string Image { get; set; }
+
         [ForeignKey("Author")]
         public string AuthorId { get; set; }
 

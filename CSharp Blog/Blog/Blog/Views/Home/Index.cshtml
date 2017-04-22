@@ -23,8 +23,12 @@
             </small>
             <p>
                 <div class="body">
-                    @Utils.CutArticle(article.Content)
-
+                    <div>
+                        <img src="@article.Image">
+                    </div>
+                    <div>
+                        @Utils.CutArticle(article.Content)
+                    </div>
                 </div>
         </article>
     }

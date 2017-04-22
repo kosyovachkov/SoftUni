@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -53,7 +54,7 @@ namespace Blog.Controllers.Admin
             return admins;
         }
 
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
@@ -63,9 +64,103 @@ namespace Blog.Controllers.Admin
             using(var db = new BlogDbContext())
             {
                 var user = db.Users.FirstOrDefault(u => u.Id.Equals(id));
+
+                var model = new UserViewModel();
+
+                model.Email = user.Email;
+                model.FullName = user.FullName;
+                model.Roles = GetUserRoles(user, db);
+
+                return View(model);
             }
 
-            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Edit(string id, UserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+
+                using (var db = new BlogDbContext())
+                {
+                    var user = db.Users.FirstOrDefault(u => u.Id.Equals(id));
+
+                    if (user == null)
+                    {
+
+                    }
+
+                    user.Email = model.Email;
+                    user.UserName = model.Email;
+                    user.FullName = model.FullName;
+
+                    if (!string.IsNullOrEmpty(model.Password))
+                    {
+                        var passordHasher = new PasswordHasher();
+                        var newPasswordHash = passordHasher.HashPassword(model.Password);
+                        user.PasswordHash = newPasswordHash;
+                    }
+
+
+                    SetUserRoles(user, db, model);
+
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("List");
+            }
+
+            return View(model);
+        }
+
+        private void SetUserRoles(ApplicationUser user, BlogDbContext db, UserViewModel model)
+        {
+            var userManager = Request
+                .GetOwinContext()
+                .GetUserManager<ApplicationUserManager>();
+
+            foreach (var role in model.Roles)
+            {
+                if (role.IsSelected)
+                {
+                    userManager.AddToRole(user.Id, role.Name);
+                }
+                else if (!role.IsSelected)
+                {
+                    userManager.RemoveFromRole(user.Id, role.Name);
+                }
+            }
+        }
+
+        private List<Role> GetUserRoles(ApplicationUser user, BlogDbContext db)
+        {
+            var rolesInDatabse = db.Roles
+                .Select(r => r.Name)
+                .OrderBy(r => r)
+                .ToList();
+
+            var userManager = Request
+                .GetOwinContext()
+                .GetUserManager<ApplicationUserManager>();
+
+            List<Role> userRoles = new List<Role>();
+
+            foreach (var roleName in rolesInDatabse)
+            {
+                Role role = new Role() { Name = roleName };
+
+                if ( userManager.IsInRole(user.Id, roleName))
+                {
+                    role.IsSelected = true;
+                }
+
+                userRoles.Add(role);
+            }
+
+            return userRoles;
+
         }
     }
 }
