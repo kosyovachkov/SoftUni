@@ -42,28 +42,31 @@
                         @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.Author.FullName, htmlAttributes: new { @class = "control-label col-sm-4" })
-                    <div class="col-sm-4">
-                        <select name="AuthorId" class="form-control">
+                @if (User.IsInRole("Administrators"))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Author.FullName, htmlAttributes: new { @class = "control-label col-sm-4" })
+                        <div class="col-sm-4">
+                            <select name="AuthorId" class="form-control">
 
-                            @foreach (var author in ViewBag.Authors)
-                            {
-                                <option value="@author.Id"  @if (Model.AuthorId == author.Id)
-                                        {
-                                            @:selected="@author.Id";
-                                        }
-                                        >@author.FullName</option>
-                            }
-                        </select>
+                                @foreach (var author in ViewBag.Authors)
+                                {
+                                    <option value="@author.Id" @if (Model.AuthorId == author.Id) { @: selected="@author.Id" ;
+                                                                                    }>
+                                        @author.FullName
+                                                                                </option>
+                                }
+                            </select>
+                        </div>
+
                     </div>
-                    
-                </div>
+                }
+                
            
                 <div class="form-group">
                     <div class="col-md-offset-4 col-sm-4">
                         <input type="submit" value="Редактирай" class="btn btn-success" />
-                        @Html.ActionLink("Начало", "Index", "Home", null, new { @class = "btn btn-default" })
+                        <input type="reset" value="Изчисти" class="btn btn-default"/>
                     </div>
                 </div>
             </div>

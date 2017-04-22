@@ -29,12 +29,12 @@
         <footer class="pull-right">
             @if (User.Identity.Name.Equals(Model.Author.UserName) || User.IsInRole("Administrators"))
             { 
-                @Html.ActionLink("Редактирай", "Edit", "Articles", new { @id = Model.Id }, new { @class = "btn btn-success btn-xs" })
+                @Html.ActionLink("Редактирай", "Edit", "Articles", new { @id = Model.Id }, new { @class = "btn btn-success" })
                 @: 
-                @Html.ActionLink("Изтрий", "Delete", "Articles", new { @id = Model.Id }, new { @class = "btn btn-danger btn-xs" })
+                @Html.ActionLink("Изтрий", "Delete", "Articles", new { @id = Model.Id }, new { @class = "btn btn-danger" })
             }
 
-            @Html.ActionLink("Начало", "Index", "Home", null, new { @class = "btn btn-default btn-xs" })
+            @Html.ActionLink("Начало", "Index", "Home", null, new { @class = "btn btn-primary" })
         </footer>
     </article>
 </div>

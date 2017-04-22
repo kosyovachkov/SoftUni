@@ -7,6 +7,7 @@
 @foreach (var article in Model)
 {
     <div class="container col-md-12">
+
         <article>
             <header>
                 <h2>
@@ -24,21 +25,20 @@
             </small>
             <p>
             <p>
-
                 @article.Content
             </p>
 
             <footer class="pull-right">
                 @if (User.Identity.Name.Equals(article.Author.UserName) || User.IsInRole("Administrators"))
                 {
-                    @Html.ActionLink("Редактирай", "Edit", "Articles", new { @id = article.Id }, new { @class = "btn btn-success btn-xs" })
+                    @Html.ActionLink("Редактирай", "Edit", "Articles", new { @id = article.Id }, new { @class = "btn btn-success" })
                     @:
-                    @Html.ActionLink("Изтрий", "Delete", "Articles", new { @id = article.Id }, new { @class = "btn btn-danger btn-xs" })
+                    @Html.ActionLink("Изтрий", "Delete", "Articles", new { @id = article.Id }, new { @class = "btn btn-danger" })
                 }
 
-                @Html.ActionLink("Начало", "Index", "Home", null, new { @class = "btn btn-default btn-xs" })
+                @Html.ActionLink("Начало", "Index", "Home", null, new { @class = "btn btn-primary" })
             </footer>
         </article>
     </div>
 }
-
+<div class="clearfix"></div>

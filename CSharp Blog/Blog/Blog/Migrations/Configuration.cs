@@ -27,9 +27,13 @@ namespace Blog.Migrations
                 CreateUser(context, "pesho@gmail.com", "123", "Peter Ivanov");
                 CreateUser(context, "merry@gmail.com", "123", "Maria Petrova");
                 CreateUser(context, "geshu@gmail.com", "123", "George Petrov");
+                CreateUser(context, "user@user.com", "123", "User User");
 
                 CreateRole(context, "Administrators");
+                CreateRole(context, "Users");
                 AddUserToRole(context, "admin@gmail.com", "Administrators");
+                AddUserToRole(context, "admin@gmail.com", "Users");
+                AddUserToRole(context, "user@user.com", "Users");
 
                 CreateArticle(context,
                     title: "Work Begins on HTML5.1",

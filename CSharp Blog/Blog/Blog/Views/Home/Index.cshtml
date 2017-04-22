@@ -30,8 +30,8 @@
     }
 </section>
 
-<p>
-    <a href="/Home/Index?page=@(ViewBag.CurrentPage - 1)" class="btn btn-primary @(ViewBag.CurrentPage == 1 ? "hidden" : string.Empty) pull-left"><<< Предишна страница</a>
-    <a href="/Home/Index?page=@(ViewBag.CurrentPage + 1)" class="btn btn-primary @(!Model.Any() || Model.Count() < 4 ? "hidden" : string.Empty) pull-right">Следваща страница >>></a>
-</p>
-<br>
+<hr>
+<div class="text-center">
+    <a href="/Home/Index?page=@(ViewBag.CurrentPage - 1)" class="btn btn-primary @(ViewBag.CurrentPage == 1 ? "hidden" : string.Empty) "><<< Предишна страница</a>
+    <a href="/Home/Index?page=@(ViewBag.CurrentPage + 1)" class="btn btn-primary @(!Model.Any() || Model.Count() < 4 ? "hidden" : string.Empty)">Следваща страница >>></a>
+</div>

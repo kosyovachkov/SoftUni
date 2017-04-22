@@ -158,6 +158,13 @@ namespace Blog.Controllers
                     FullName = model.FullName
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+                using (var db = new BlogDbContext())
+                {
+                    var userId = db.Users.FirstOrDefault(u => u.Email.Equals(user.Email)).Id;
+                   this.UserManager.AddToRole(userId, "User");
+                }
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);

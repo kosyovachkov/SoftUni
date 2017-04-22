@@ -7,7 +7,7 @@ namespace Blog.Classes
 {
     public class Utils
     {
-        public static string CutArticle(string text, int MaxLength = 100)
+        public static string CutArticle(string text, int MaxLength = 500)
         {
             if (text == null || text.Length <= MaxLength)
             {

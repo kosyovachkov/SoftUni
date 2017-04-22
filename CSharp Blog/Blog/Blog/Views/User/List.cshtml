@@ -1,35 +1,42 @@
-﻿@model List<Blog.Models.ApplicationUser>
+﻿@model IEnumerable<Blog.Models.ApplicationUser>
 @{
     ViewBag.Title = "List";
 }
 
 <div class="container">
     <div class="well">
-        <h2>List</h2>
-        <table class="table-hover table-striped">
+        <h2>Списък на потребители</h2>
+        <table class="table table-hover table-striped tabl">
             <thead>
                 <tr>
                     <th>Номер</th>
                     <th>Потребителско име</th>
-                    <th>Действия</th>
+                    <th class="pull-right">Действия</th>
                 </tr>
             </thead>
 
             <tbody>
                 @foreach (var user in Model)
                 {
-                    <tr>
-                        <td>@user.Id</td>
-                        <td>@user.UserName</td>
-                        <td>
-                            @Html.ActionLink("Редактирай", "Edit", "User")
-                            @Html.ActionLink("Изтрий", "Delete", "User")
-                        </td>
-                    </tr>
-                }
-            </tbody>
+                    if (ViewBag.Admins.Contains(user.Id))
+                    {
+                        @:<tr class="info">
+                            }
+                     else
+                     {
+                            @:<tr>
+                      }
+                            <td>@user.Id</td>
+                            <td>@user.UserName</td>
+                            <td class="pull-right">
+                                @Html.ActionLink("Редактирай", "Edit", "User", new { @id = user.Id}, null) |
+                                @Html.ActionLink("Изтрий", "Delete", "User", new { @id = user.Id }, null)
+                            </td>
 
-        </table>
-    </div>
-</div>
+                            }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
 
