@@ -24,10 +24,10 @@
             <p>
                 <div class="body">
                     <div>
-                        <img src="@article.Image">
+                        <img class="img-responsive" src="@article.Image">
                     </div>
                     <div>
-                        @Utils.CutArticle(article.Content)
+                        @Html.Raw(Utils.CutArticle(article.Content))
                     </div>
                 </div>
         </article>

@@ -32,7 +32,6 @@ namespace Blog.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
 
-        [Url]
         [Display(Name = "Прикачи снимка")]
         public string Image { get; set; }
 
@@ -41,6 +40,12 @@ namespace Blog.Models
 
         [Display(Name = "Автор")]
         public virtual ApplicationUser Author { get; set; }
+
+
+        [ForeignKey("Category")]
+        public int? CatgoryId { get; set; }
+
+        public virtual Category Category { get; set; }
     }
 
 

@@ -6,12 +6,12 @@
 <div class="container">
     <div class="well">
         <h2>Списък на потребители</h2>
-        <table class="table table-hover table-striped tabl">
+        <table class="table table-hover table-striped">
             <thead>
                 <tr>
                     <th>Номер</th>
                     <th>Потребителско име</th>
-                    <th class="pull-right">Действия</th>
+                    <th class="text-right">Действия</th>
                 </tr>
             </thead>
 
@@ -28,7 +28,7 @@
                       }
                             <td>@user.Id</td>
                             <td>@user.UserName</td>
-                            <td class="pull-right">
+                            <td class="text-right">
                                 @Html.ActionLink("Редактирай", "Edit", "User", new { @id = user.Id}, null) |
                                 @Html.ActionLink("Изтрий", "Delete", "User", new { @id = user.Id }, null)
                             </td>

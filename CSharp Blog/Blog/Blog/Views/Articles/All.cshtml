@@ -26,10 +26,10 @@
             <p>
             <p>
                 <div>
-                    <img src="@article.Image">
+                    <img class="img-responsive" src="@article.Image">
                 </div>
                 <div>
-                    @article.Content
+                    @Html.Raw(article.Content)
                 </div>
             </p>
 

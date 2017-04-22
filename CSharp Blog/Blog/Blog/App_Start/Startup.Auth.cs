@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using Blog.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Blog
 {
@@ -63,6 +64,9 @@ namespace Blog
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+            //var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new BlogDbContext()));
+            //roleManager.Create(new IdentityRole("Users"));
         }
     }
 }

@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Blog.Controllers.Admin
 {
-    [Authorize(Roles ="Administrators")]
+    [Authorize(Roles = "Administrators")]
 
     public class UserController : Controller
     {
@@ -32,7 +32,7 @@ namespace Blog.Controllers.Admin
                 return View(users);
             }
 
-            
+
         }
 
         private HashSet<string> GetAdmins(BlogDbContext db)
@@ -61,7 +61,7 @@ namespace Blog.Controllers.Admin
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            using(var db = new BlogDbContext())
+            using (var db = new BlogDbContext())
             {
                 var user = db.Users.FirstOrDefault(u => u.Id.Equals(id));
 
@@ -115,6 +115,45 @@ namespace Blog.Controllers.Admin
             return View(model);
         }
 
+
+
+
+        public ActionResult Delete(string id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            using (var db = new BlogDbContext())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Id.Equals(id));
+
+                if (user == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                return View(user);
+            }
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        public ActionResult DeleteConfirmed(string id)
+        {
+            using (var db = new BlogDbContext())
+            {
+                var user = db.Users.FirstOrDefault(u => u.Id.Equals(id));
+
+                db.Users.Remove(user);
+                db.SaveChanges();
+
+                return RedirectToAction("List");
+            }
+        }
+
+
+
         private void SetUserRoles(ApplicationUser user, BlogDbContext db, UserViewModel model)
         {
             var userManager = Request
@@ -151,7 +190,7 @@ namespace Blog.Controllers.Admin
             {
                 Role role = new Role() { Name = roleName };
 
-                if ( userManager.IsInRole(user.Id, roleName))
+                if (userManager.IsInRole(user.Id, roleName))
                 {
                     role.IsSelected = true;
                 }

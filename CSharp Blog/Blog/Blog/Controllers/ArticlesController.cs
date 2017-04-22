@@ -111,7 +111,7 @@ namespace Blog.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Content,Date,AuthorId")] Article article)
+        public ActionResult Edit([Bind(Include = "Id,Title,Content,Date,AuthorId,Image")] Article article)
         {
             if (ModelState.IsValid)
             {
