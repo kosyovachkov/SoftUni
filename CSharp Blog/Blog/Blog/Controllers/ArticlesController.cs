@@ -68,7 +68,7 @@ namespace Blog.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ArticleViewModel model)
+        public ActionResult Create(ArticleViewModel model, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -76,7 +76,24 @@ namespace Blog.Controllers
 
 
                 var article = new Article(user.Id, model.Title, model.Content, model.Image, model.CategoryId);
-              
+
+                if (image != null)
+                {
+                    var allowedTypes = new[] { "image/jpg", "image/jpeg", "image/png", "image/gif" };
+                    if (allowedTypes.Contains(image.ContentType))
+                    {
+                        var imagesPath = "/Content/Images";
+                        var filename = image.FileName;
+
+                        var uploadPath = imagesPath + filename;
+
+                        var physicalPath = Server.MapPath(uploadPath);
+                        image.SaveAs(physicalPath);
+
+                        article.Image = uploadPath;
+
+                    }
+                }
 
                 db.Articles.Add(article);
                 db.SaveChanges();
@@ -96,10 +113,11 @@ namespace Blog.Controllers
             }
             Article article = db.Articles.Find(id);
 
-            //if (!User.Identity.Name.Equals(article.Author.UserName) || !User.IsInRole("Administrators"))
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            //}
+
+            if (!User.IsInRole("Administrators") && !(article.Author != null && article.Author.UserName.Equals(User.Identity.Name)))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
 
             if (article == null)
             {
@@ -126,7 +144,7 @@ namespace Blog.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int? id, ArticleViewModel model)
+        public ActionResult Edit(int? id, ArticleViewModel model, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -134,9 +152,27 @@ namespace Blog.Controllers
                 var article = db.Articles.FirstOrDefault(a => a.Id == id);
                 article.Title = model.Title;
                 article.Content = model.Content;
-                article.Image = model.Image;
+                //article.Image = model.Image;
                 article.AuthorId = model.AuthorId;
                 article.CatgoryId = model.CategoryId;
+
+                if (image != null)
+                {
+                    var allowedTypes = new[] { "image/jpg", "image/jpeg", "image/png", "image/gif" };
+                    if (allowedTypes.Contains(image.ContentType))
+                    {
+                        var imagesPath = "/Content/Images";
+                        var filename = image.FileName;
+
+                        var uploadPath = imagesPath + filename;
+
+                        var physicalPath = Server.MapPath(uploadPath);
+                        image.SaveAs(physicalPath);
+
+                        article.Image = uploadPath;
+
+                    }
+                }
 
                 db.Entry(article).State = EntityState.Modified;
                 db.SaveChanges();
@@ -153,26 +189,34 @@ namespace Blog.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Article article = db.Articles.Find(id);
+            Article article = db.Articles.FirstOrDefault(a => a.Id == id);
             if (article == null)
             {
                 return HttpNotFound();
+            }
+
+            if (!User.IsInRole("Administrators") && !(article.Author != null && article.Author.UserName.Equals(User.Identity.Name)))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
             return View(article);
         }
 
         // POST: Articles/Delete/5
         [Authorize]
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? id)
         {
-            Article article = db.Articles.Find(id);
-
-            if (!User.Identity.Name.Equals(article.Author.UserName) || !User.IsInRole("Administrators"))
+            if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            Article article = db.Articles.FirstOrDefault(a => a.Id == id);
+
+            
 
             db.Articles.Remove(article);
             db.SaveChanges();

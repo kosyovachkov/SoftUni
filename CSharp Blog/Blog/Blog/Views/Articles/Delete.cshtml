@@ -5,42 +5,38 @@
 }
 
 <div class="container">
-    <div class="well" style="background-color:antiquewhite; border:1px solid red">
-
-        <h2>Изтриване</h2>
-
-
-        <article>
-            <header>
-                <h2>
-                    @Model.Title
-                </h2>
-            </header>
-            <small class="author ">
-                Публикувано
-                @if (Model.Author != null)
-            {
-                    @:от
-                    <i>@Model.Author.FullName (@Model.Author.UserName)</i>
-                }
-                на <i>@Model.Date</i>
-            </small>
-            <p>
-            <p>
-                @Html.Raw(Model.Content)
-            </p>
-
-        </article>
-
-        @using (Html.BeginForm())
-            {
+    <div class="well">
+        <h2>Изтрий статия</h2>
+        @using (Html.BeginForm("Delete", "Articles", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
             @Html.AntiForgeryToken()
 
-            <div class="form-actions no-color">
-                <input type="submit" value="Изтриване" class="btn btn-danger" />
-                @Html.ActionLink("Отказ", "Index", "Home", null, new { @class = "btn btn-default" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Title, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Content, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.TextAreaFor(m => m.Content, new { @class = "form-control", @readonly = "readonly", @rows = "7" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Category, new { @class = "control-label col-sm-4" })
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.Category.Name, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-4">
+                    @Html.ActionLink("Cancel", "Index", "Article", null, new { @class = "btn btn-default" })
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </div>
             </div>
         }
     </div>
 </div>
-

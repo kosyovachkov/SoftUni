@@ -37,9 +37,10 @@ namespace Blog.Models
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
 
+        [Display(Name = "Автор")]
         public string AuthorId { get; set; }
 
-        [Display(Name ="Category")]
+        [Display(Name ="Категория")]
         public int CategoryId { get; set; }
 
         public List<Category> Categories { get; set; }
