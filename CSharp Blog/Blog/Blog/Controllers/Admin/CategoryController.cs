@@ -20,6 +20,25 @@ namespace Blog.Controllers.Admin
             return View(db.Categories.ToList());
         }
 
+        public ActionResult List()
+        {
+            var categories = db.Categories.ToList();
+
+            return View(categories);
+        }
+
+        public ActionResult ListArticlesOfCategory(int? id)
+        {
+
+            var articles = db.Categories
+                .Include(c => c.Articles.Select(a => a.Author))
+                .FirstOrDefault(c => c.Id == id)
+                .Articles
+                .ToList();
+
+            return View(articles);
+        }
+
         // GET: Category/Details/5
         public ActionResult Details(int? id)
         {
@@ -52,7 +71,7 @@ namespace Blog.Controllers.Admin
             {
                 db.Categories.Add(category);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
 
             return View(category);

@@ -1,15 +1,15 @@
-﻿@using Blog.Models;
-@using Blog.Classes;
-@model IEnumerable<Article>
+﻿@using Blog.Classes;
+@model IEnumerable<Blog.Models.Article>
 
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Списък";
 }
 
 <h2>Списък на всички статии</h2>
 
 <hr>
+
 <table class="table table-striped tab-content table-hover">
     <tr>
         <th>
@@ -24,43 +24,46 @@
         <th>
             @Html.DisplayNameFor(model => model.Author)
         </th>
-        <th>Действия</th>
+        <th class="text-right">Действия</th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var article in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.Raw(Utils.CutArticle(item.Content))
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @if (item.Author != null)
-                {
-                    @item.Author.FullName;
-                }
-                else
-                {
-                    @:<i>(няма автор)</i>
-                }
+        if (article.Author != null && article.Author.UserName.Equals(User.Identity.Name))
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => article.Title)
+                </td>
+                <td>
+                    @Html.Raw(Utils.CutArticle(article.Content))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => article.Date)
+                </td>
+                <td>
+                    @if (article.Author != null)
+                    {
+                        @article.Author.FullName;
+                    }
+                    else
+                    {
+                        @:<i>(няма автор)</i>
+                    }
 
-            </td>
-            <td>
-                @Html.ActionLink("Детайли", "Details", new { id = item.Id }) |
-                @if (User.Identity.Name.Equals(item.Author.UserName) || User.IsInRole("Administrators"))
-                {
-                    @Html.ActionLink("Редактирай", "Edit", new { id = item.Id });
-                    @:|
-                    @Html.ActionLink("Изтрий", "Delete", new { id = item.Id })
-                }
+                </td>
+                <td class="text-right">
+                    @Html.ActionLink("Детайли", "Details", new { id = article.Id }) |
+                    @if (true)
+                    {
+                        @Html.ActionLink("Редактирай", "Edit", new { id = article.Id });
+                        @:|
+                        @Html.ActionLink("Изтрий", "Delete", new { id = article.Id })
+                    }
 
-            </td>
-        </tr>
+                </td>
+            </tr>
+        }
     }
 
 </table>

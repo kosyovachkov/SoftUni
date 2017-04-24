@@ -54,7 +54,12 @@ namespace Blog.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            return View();
+            var categories = db.Categories.ToList();
+
+            var model = new ArticleViewModel();
+            model.Categories = categories;
+
+            return View(model);
         }
 
         // POST: Articles/Create
@@ -63,21 +68,22 @@ namespace Blog.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Content, Image")] Article article)
+        public ActionResult Create(ArticleViewModel model)
         {
             if (ModelState.IsValid)
             {
-                article.Author = db.Users
-                    .FirstOrDefault(u => u.UserName == User.Identity.Name);
+                var user = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
 
+                var article = new Article(user.Id, model.Title, model.Content, model.Image, model.CategoryId);
+              
 
                 db.Articles.Add(article);
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
 
-            return View(article);
+            return View(model);
         }
 
         // GET: Articles/Edit/5
@@ -100,9 +106,18 @@ namespace Blog.Controllers
                 return HttpNotFound();
             }
 
+            var model = new ArticleViewModel();
+            model.Id = article.Id;
+            model.Title = article.Title;
+            model.Content = article.Content;
+            model.Image = article.Image;
+            model.AuthorId = article.AuthorId;
+            model.CategoryId = article.CatgoryId;
+            model.Categories = db.Categories.OrderBy(c => c.Name).ToList();
+
             var authors = db.Users.ToList();
             ViewBag.Authors = authors;
-            return View(article);
+            return View(model);
         }
 
         // POST: Articles/Edit/5
@@ -111,16 +126,23 @@ namespace Blog.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Content,Date,AuthorId,Image")] Article article)
+        public ActionResult Edit(int? id, ArticleViewModel model)
         {
             if (ModelState.IsValid)
             {
-                
+
+                var article = db.Articles.FirstOrDefault(a => a.Id == id);
+                article.Title = model.Title;
+                article.Content = model.Content;
+                article.Image = model.Image;
+                article.AuthorId = model.AuthorId;
+                article.CatgoryId = model.CategoryId;
+
                 db.Entry(article).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
-            return View(article);
+            return View(model);
         }
 
         // GET: Articles/Delete/5

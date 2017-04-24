@@ -86,11 +86,6 @@ namespace Blog.Controllers.Admin
                 {
                     var user = db.Users.FirstOrDefault(u => u.Id.Equals(id));
 
-                    if (user == null)
-                    {
-
-                    }
-
                     user.Email = model.Email;
                     user.UserName = model.Email;
                     user.FullName = model.FullName;

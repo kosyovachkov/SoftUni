@@ -27,8 +27,8 @@
         </p>
         
         <footer class="pull-right">
-            @if (User.Identity.Name.Equals(Model.Author.UserName) || User.IsInRole("Administrators"))
-            { 
+            @if (User.IsInRole("Administrators") || (Model.Author != null && Model.Author.UserName.Equals(User.Identity.Name)))
+            {
                 @Html.ActionLink("Редактирай", "Edit", "Articles", new { @id = Model.Id }, new { @class = "btn btn-success" })
                 @: 
                 @Html.ActionLink("Изтрий", "Delete", "Articles", new { @id = Model.Id }, new { @class = "btn btn-danger" })

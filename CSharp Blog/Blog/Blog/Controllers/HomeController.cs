@@ -25,6 +25,17 @@ namespace Blog.Controllers
             
         }
 
+        public ActionResult ListCategories()
+        {
+            using (var db = new BlogDbContext())
+            {
+                var categories = db.Categories.ToList();
+                return View(categories);
+            }
+
+            
+        }
+
         
     }
 }

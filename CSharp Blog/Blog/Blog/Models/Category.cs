@@ -12,7 +12,7 @@ namespace Blog.Models
 
         public Category()
         {
-            this.Articles = new HashSet<Article>();
+            this.articles = new HashSet<Article>();
         }
 
         [Key]

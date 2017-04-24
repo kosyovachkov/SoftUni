@@ -24,7 +24,7 @@
                     <li> @Html.ActionLink("Всички статии", "All", "Articles")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li> @Html.ActionLink("Статии", "List", "Articles")</li>
+                        <li> @Html.ActionLink("Мои статии", "List", "Articles")</li>
                         <li> @Html.ActionLink("Нова статия", "Create", "Articles")</li>
                     }
 
