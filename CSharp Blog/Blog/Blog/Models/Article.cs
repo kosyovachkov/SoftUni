@@ -55,6 +55,7 @@ namespace Blog.Models
         [ForeignKey("Category")]
         public int CatgoryId { get; set; }
 
+        [Display(Name ="Категория")]
         public virtual Category Category { get; set; }
     }
 

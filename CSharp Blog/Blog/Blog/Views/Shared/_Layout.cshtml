@@ -21,6 +21,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li> @Html.ActionLink("Категории", "ListCategories", "Home")</li>
                     <li> @Html.ActionLink("Всички статии", "All", "Articles")</li>
                     @if (User.Identity.IsAuthenticated)
                     {

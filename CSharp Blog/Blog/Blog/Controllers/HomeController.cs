@@ -1,6 +1,7 @@
 ﻿using Blog.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -29,7 +30,9 @@ namespace Blog.Controllers
         {
             using (var db = new BlogDbContext())
             {
-                var categories = db.Categories.ToList();
+                var categories = db.Categories
+                    .Include(c => c.Articles)
+                    .ToList();
                 return View(categories);
             }
 

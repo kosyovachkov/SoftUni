@@ -5,7 +5,7 @@
 }
 
 <div class="container">
-    <div class="well">
+    <div class="well" style="background-color:darksalmon">
         <h2>Изтрий статия</h2>
         @using (Html.BeginForm("Delete", "Articles", FormMethod.Post, new { @class = "form-horizontal" }))
         {
@@ -33,8 +33,8 @@
 
             <div class="form-group">
                 <div class="col-sm-4 col-sm-offset-4">
-                    @Html.ActionLink("Cancel", "Index", "Article", null, new { @class = "btn btn-default" })
-                    <input type="submit" value="Delete" class="btn btn-danger" />
+                    @Html.ActionLink("Откажи", "Index", "Home", null, new { @class = "btn btn-default" })
+                    <input type="submit" value="Изтрий" class="btn btn-danger" />
                 </div>
             </div>
         }

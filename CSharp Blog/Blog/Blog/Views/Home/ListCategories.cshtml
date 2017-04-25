@@ -7,8 +7,12 @@
     <div>
         @foreach (var category in Model)
         {
-            <h1>@Html.ActionLink(category.Name, "ListArticlesOfCategory", "Category", new { @id = category.Id}, null)</h1>
-        }
+            <div class="col-md-4" >
+                <div class="bg-primary" style="margin-right:5px;text-align:center">
+            <div style="font-size:22px">@Html.ActionLink(string.Format($"{category.Name}({category.Articles.Count})"), "ListArticlesOfCategory", "Category", new { @id = category.Id}, null)</div>
+        </div>
+                </div>
+                }
         
     </div>
 </div>
