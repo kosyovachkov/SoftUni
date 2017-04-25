@@ -17,7 +17,11 @@ namespace Blog.Controllers
 
             var pageSize = 4;
 
-            var articles = database.Articles.OrderByDescending(a => a.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var articles = database.Articles.OrderByDescending(a => a.Id)
+                .Include(a => a.Tags)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
 
             ViewBag.CurrentPage = page;
 

@@ -43,6 +43,9 @@ namespace Blog.Models
         [Display(Name ="Категория")]
         public int CategoryId { get; set; }
 
+        [Display(Name ="Тагове")]
+        public string Tags { get; set; }
+
         public List<Category> Categories { get; set; }
 
         

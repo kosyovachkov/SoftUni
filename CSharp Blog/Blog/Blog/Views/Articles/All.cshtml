@@ -33,7 +33,15 @@
                 </div>
             </p>
 
-            <footer class="pull-right">
+            <footer>
+                <div class="pull-left">
+                    @foreach (var tag in article.Tags)
+                    {
+                        @Html.ActionLink(tag.Name, "List", "Tag", new { @id = tag.Id }, new { @class = "btn btn-default btn-xs" })
+                    }
+                </div>
+
+                <div   class="pull-right">
                 @if (User.IsInRole("Administrators") || (article.Author != null && article.Author.UserName.Equals(User.Identity.Name)))
                 {
                     @Html.ActionLink("Редактирай", "Edit", "Articles", new { @id = article.Id }, new { @class = "btn btn-success" })
@@ -41,7 +49,7 @@
                     @Html.ActionLink("Изтрий", "Delete", "Articles", new { @id = article.Id }, new { @class = "btn btn-danger" })
                 }
 
-                @Html.ActionLink("Начало", "Index", "Home", null, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Начало", "Index", "Home", null, new { @class = "btn btn-primary" })</div>
             </footer>
         </article>
     </div>

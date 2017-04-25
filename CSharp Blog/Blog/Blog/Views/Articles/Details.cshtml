@@ -26,7 +26,21 @@
             @Html.Raw(Model.Content)
         </p>
         
-        <footer class="pull-right">
+        <footer>
+            @if (Model.Tags.Count > 0)
+            {
+                <hr>
+                <h4>Тагове към статията</h4>
+            }
+            <div class="pull-left">
+                @foreach (var tag in Model.Tags)
+                {
+                    <span>@Html.ActionLink(tag.Name, "ListArticlesByTag", "Tag", new { @id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
+                }
+            </div>
+
+
+            <div class="pull-right">
             @if (User.IsInRole("Administrators") || (Model.Author != null && Model.Author.UserName.Equals(User.Identity.Name)))
             {
                 @Html.ActionLink("Редактирай", "Edit", "Articles", new { @id = Model.Id }, new { @class = "btn btn-success" })
@@ -35,6 +49,7 @@
             }
 
             @Html.ActionLink("Начало", "Index", "Home", null, new { @class = "btn btn-primary" })
+            </div>
         </footer>
     </article>
 </div>

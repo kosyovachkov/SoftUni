@@ -9,9 +9,13 @@ namespace Blog.Models
 {
     public class Article
     {
+
+        private ICollection<Tag> tags;
+
         public Article()
         {
             this.Date = DateTime.Now;
+            this.tags = new HashSet<Tag>();
         }
 
         public Article(string authorId, string title, string content, string image, int categoryId)
@@ -22,6 +26,7 @@ namespace Blog.Models
             this.Image = image;
             this.CatgoryId = categoryId;
             this.Date = DateTime.Now;
+            this.tags = new HashSet<Tag>();
         }
 
         [Key]
@@ -55,11 +60,17 @@ namespace Blog.Models
         [ForeignKey("Category")]
         public int CatgoryId { get; set; }
 
-        [Display(Name ="Категория")]
+        [Display(Name = "Категория")]
         public virtual Category Category { get; set; }
+
+        public virtual ICollection<Tag> Tags
+        {
+            get { return this.tags; }
+            set { this.tags = value; }
+        }
     }
 
 
 
-   
+
 }

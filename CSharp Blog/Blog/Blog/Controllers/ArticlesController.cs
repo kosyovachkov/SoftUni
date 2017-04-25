@@ -22,6 +22,7 @@ namespace Blog.Controllers
         {
             var articlesWithAuthors = db.Articles
                 .Include(a => a.Author)
+                .Include(a => a.Tags)
                 .ToList();
             return View(articlesWithAuthors);
         }
@@ -42,7 +43,11 @@ namespace Blog.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Article article = db.Articles.Find(id);
+            Article article = db.Articles
+                .Where(a => a.Id ==id)
+                .Include(a => a.Tags)
+                .Include(a => a.Author)
+                .First();
             if (article == null)
             {
                 return HttpNotFound();
@@ -95,12 +100,36 @@ namespace Blog.Controllers
                     }
                 }
 
+                this.AddTagsToArticles(article, model, db);
+
                 db.Articles.Add(article);
                 db.SaveChanges();
                 return RedirectToAction("Index", "Home");
             }
 
             return View(model);
+        }
+
+        private void AddTagsToArticles(Article article, ArticleViewModel model, BlogDbContext db)
+        {
+            var tagsStrings = model.Tags.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(t => t.ToLower())
+                .Distinct();
+
+            article.Tags.Clear();
+
+            foreach (var tagString in tagsStrings)
+            {
+                Tag tag = db.Tags.FirstOrDefault(t => t.Name.Equals(tagString));
+
+                if (tag == null)
+                {
+                    tag = new Tag() { Name = tagString};
+                    db.Tags.Add(tag);
+                }
+
+                article.Tags.Add(tag);
+            }
         }
 
         // GET: Articles/Edit/5
@@ -132,6 +161,7 @@ namespace Blog.Controllers
             model.AuthorId = article.AuthorId;
             model.CategoryId = article.CatgoryId;
             model.Categories = db.Categories.OrderBy(c => c.Name).ToList();
+            model.Tags = String.Join(",", article.Tags.Select(t => t.Name));
 
             var authors = db.Users.ToList();
             ViewBag.Authors = authors;
@@ -155,6 +185,7 @@ namespace Blog.Controllers
                 //article.Image = model.Image;
                 article.AuthorId = model.AuthorId;
                 article.CatgoryId = model.CategoryId;
+                this.AddTagsToArticles(article, model, db);
 
                 if (image != null)
                 {
