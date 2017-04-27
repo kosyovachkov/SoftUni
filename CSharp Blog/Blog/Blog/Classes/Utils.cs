@@ -16,5 +16,15 @@ namespace Blog.Classes
             string cuttedText = text.Substring(0, MaxLength) + "...";
             return cuttedText;
         }
+
+        public static string CutForTable(string text, int MaxLength = 200)
+        {
+            if (text == null || text.Length <= MaxLength)
+            {
+                return text;
+            }
+            string cuttedText = text.Substring(0, MaxLength) + "...";
+            return cuttedText;
+        }
     }
 }

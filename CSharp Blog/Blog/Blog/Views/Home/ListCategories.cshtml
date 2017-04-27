@@ -7,12 +7,90 @@
     <div>
         @foreach (var category in Model)
         {
-            <div class="col-md-4" >
-                <div class="bg-primary" style="margin-right:5px;text-align:center">
-            <div style="font-size:22px">@Html.ActionLink(string.Format($"{category.Name}({category.Articles.Count})"), "ListArticlesOfCategory", "Category", new { @id = category.Id}, null)</div>
-        </div>
+            <div class="col-md-4">
+                <div class="category_box" style="margin-right:5px;text-align:center">
+                    <div style="font-size:18px">@Html.ActionLink(string.Format($"{category.Name}({category.Articles.Count})"), "ListArticlesOfCategory", "Category", new { @id = category.Id }, null)</div>
                 </div>
-                }
+            </div>
+        }
+
+    </div>
+
+    <div class="col-md-4">
+        @foreach (var category in Model)
+        {
+            if (category.Name.Equals("Политика")&&category.Articles.Count>0)
+            {
+                var frontArticle = category.Articles.Take(1).First();
+
+                <article>
+                    <header>
+                        <h2>
+                           @Html.ActionLink(frontArticle.Title, "Details", "Articles", new { @id = frontArticle.Id }, null)
+                    </h2>
+                </header>
+                <p>
+                <p>
+                    <div>
+                        <img class="img-responsive" src="@frontArticle.Image" width="800">
+                    </div>
+                </p>
+            </article>
+            <hr>
+                <div class="text-right">--> @Html.ActionLink("Всички статии от категорията", "ListArticlesOfCategory", "Category", new { @id = category.Id }, null)</div>
+            }
+        }
+    </div>
+    <div class="col-md-4">
+        @foreach (var category in Model)
+        {
+            if (category.Name.Equals("Икономика") && category.Articles.Count > 0)
+            {
+                var frontArticle = category.Articles.Take(1).First();
+
+                <article>
+                    <header>
+                        <h2>
+                            @Html.ActionLink(frontArticle.Title, "Details", "Articles", new { @id = frontArticle.Id}, null)
+                        </h2>
+                    </header>
+                    <p>
+                    <p>
+                        <div>
+                            <img class="img-responsive" src="@frontArticle.Image" width="800">
+                        </div>
+                    </p>
+                </article>
+                <hr>
+                <div class="text-right">--> @Html.ActionLink("Всички статии от категорията", "ListArticlesOfCategory", "Category", new { @id = category.Id }, null)</div>
+            }
+        }
         
+    </div>
+    <div class="col-md-4">
+        @foreach (var category in Model)
+        {
+            if (category.Name.Equals("Спорт") && category.Articles.Count > 0)
+            {
+                var frontArticle = category.Articles.Take(1).First();
+
+                <article>
+                    <header>
+                        <h2>
+                            @Html.ActionLink(frontArticle.Title, "Details", "Articles", new { @id = frontArticle.Id }, null)
+                        </h2>
+                    </header>
+
+                    <p>
+                    <p>
+                        <div>
+                            <img class="img-responsive" src="@frontArticle.Image" width="800">
+                        </div>
+                    </p>
+                </article>
+                <hr>
+                <div class="text-right">--> @Html.ActionLink("Всички статии от категорията", "ListArticlesOfCategory", "Category", new { @id = category.Id }, null)</div>
+            }
+        }
     </div>
 </div>

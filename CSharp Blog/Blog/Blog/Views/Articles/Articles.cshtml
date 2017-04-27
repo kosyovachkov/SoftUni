@@ -9,9 +9,10 @@
 <div class="container">
     <div class="well">
 
-        <h2>Списък на мои статии</h2>
+        <h2>Списък статии</h2>
 
         <hr>
+
         <table class="table table-striped tab-content table-hover">
             <tr>
                 <th>
@@ -31,7 +32,7 @@
 
             @foreach (var article in Model)
             {
-                if (article.Author != null && article.Author.UserName.Equals(User.Identity.Name))
+                if (User.IsInRole("Administrators"))
                 {
                     <tr>
                         <td>

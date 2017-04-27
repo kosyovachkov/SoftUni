@@ -36,6 +36,16 @@ namespace Blog.Controllers
             return View(articlesWithAuthors);
         }
 
+
+        // GET: Articles/Articles
+        public ActionResult Articles()
+        {
+            var articlesWithAuthors = db.Articles
+                .Include(a => a.Author)
+                .ToList();
+            return View(articlesWithAuthors);
+        }
+
         // GET: Articles/Details/5
         public ActionResult Details(int? id)
         {
