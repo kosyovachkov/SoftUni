@@ -275,7 +275,7 @@
     <Content Include="Views\Articles\Edit.cshtml" />
     <Content Include="Views\Articles\List.cshtml" />
     <Content Include="Views\User\List.cshtml" />
-    <Content Include="Views\Articles\All.cshtml" />
+    <Content Include="Views\Articles\ListAll.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Delete.cshtml" />
     <Content Include="Views\Category\Create.cshtml" />

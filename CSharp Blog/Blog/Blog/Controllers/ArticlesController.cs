@@ -18,7 +18,7 @@ namespace Blog.Controllers
     {
         private BlogDbContext db = new BlogDbContext();
 
-        public ActionResult All()
+        public ActionResult ListAll()
         {
             var articlesWithAuthors = db.Articles
                 .Include(a => a.Author)

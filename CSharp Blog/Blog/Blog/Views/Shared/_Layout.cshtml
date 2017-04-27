@@ -22,7 +22,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li> @Html.ActionLink("Категории", "ListCategories", "Home")</li>
-                    <li> @Html.ActionLink("Всички статии", "All", "Articles")</li>
+                    <li> @Html.ActionLink("Всички статии", "ListAll", "Articles")</li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li> @Html.ActionLink("Мои статии", "List", "Articles")</li>

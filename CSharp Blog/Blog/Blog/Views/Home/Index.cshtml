@@ -21,6 +21,9 @@
                 }
                 на <i>@article.Date</i>
             </small>
+            <smal class="author">
+                Категория: <span style="font-style:italic">@Html.ActionLink(@article.Category.Name, "ListArticlesOfCategory", "Category", new { @id = article.Category.Id }, null)</span>
+            </smal>
             <p></p>
                 <div class="body">
                     <div>
