@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Тагове";
 }
 @using Blog.Classes
 @using Blog.Models
@@ -10,6 +10,45 @@
 <section class="row">
     @foreach (var article in Model)
     {
+        if (Model.Count() == 1)
+        {
+            <article class="post col-md-12">
+                <h2 class="title">@Html.ActionLink(article.Title, "Details", "Articles", new { @id = article.Id }, null)</h2>
+                <small class="author ">
+                    Публикувано
+                    @if (article.Author != null)
+                    {
+                        @:от
+                        <i>@article.Author.FullName (@article.Author.UserName)</i>
+                    }
+                    на <i>@article.Date</i>
+                </small>
+
+                <p>
+                    <div class="body">
+                        <div>
+                            <img class="img-responsive" src="@article.Image" style="float:right; margin-left:5px" width="500">
+                        </div>
+                        <div>
+                            @Html.Raw(Utils.CutArticle(article.Content)) (@Html.ActionLink(" Прочети цялата статия ", "Details", "Articles", new { @id = article.Id }, null))
+                        </div>
+                    </div>
+
+                    <footer>
+                        <div class="pull-left">
+                            @foreach (var tag in article.Tags)
+                            {
+                                <span> @Html.ActionLink(tag.Name, "ListArticlesByTag", "Tag", new { @id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
+                            }
+                        </div>
+                    </footer>
+
+            </article>
+        }
+
+        else
+        {
+
         <article class="post col-md-6">
             <h2 class="title">@Html.ActionLink(article.Title, "Details", "Articles", new { @id = article.Id }, null)</h2>
             <small class="author ">
@@ -21,34 +60,33 @@
                 }
                 на <i>@article.Date</i>
             </small>
+
             <p>
                 <div class="body">
                     <div>
                         <img class="img-responsive" src="@article.Image">
                     </div>
                     <div>
-                        @Html.Raw(Utils.CutArticle(article.Content))
+                        @Html.Raw(Utils.CutArticle(article.Content)) (@Html.ActionLink(" Прочети цялата статия ", "Details", "Articles", new { @id = article.Id }, null))
                     </div>
                 </div>
 
                 <footer>
                     <div class="pull-left">
                         @foreach (var tag in article.Tags)
-                {
+                        {
                             <span> @Html.ActionLink(tag.Name, "ListArticlesByTag", "Tag", new { @id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
                         }
                     </div>
                 </footer>
 
         </article>
-
-
-
+        }
     }
 </section>
 
-<hr>
+@*<hr>
 <div class="text-center">
     <a href="/Home/Index?page=@(ViewBag.CurrentPage - 1)" class="btn btn-primary @(ViewBag.CurrentPage == 1 ? "hidden" : string.Empty) "><<< Предишна страница</a>
     <a href="/Home/Index?page=@(ViewBag.CurrentPage + 1)" class="btn btn-primary @(!Model.Any() || Model.Count() < 4 ? "hidden" : string.Empty)">Следваща страница >>></a>
-</div>
+</div>*@

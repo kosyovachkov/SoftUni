@@ -20,6 +20,9 @@
             }
             на <i>@Model.Date</i>
         </small>
+        <smal class="author">
+            Категория: <span style="font-style:italic">@Html.ActionLink(@Model.Category.Name, "ListArticlesOfCategory", "Category", new { @id = Model.Category.Id }, null)</span>
+        </smal>
         <p>
             <div style="float:right; margin-left:5px"><img src="@Model.Image" width="800"></div>
         <p>

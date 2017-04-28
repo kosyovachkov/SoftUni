@@ -31,7 +31,7 @@
                     </div>
                     <p></p>
                     <div>
-                        @Html.Raw(Utils.CutArticle(article.Content))
+                       @Html.Raw(Utils.CutArticle(article.Content)) (@Html.ActionLink(" Прочети цялата статия ", "Details", "Articles", new { @id = article.Id}, null))
                     </div>
                 </div>
 

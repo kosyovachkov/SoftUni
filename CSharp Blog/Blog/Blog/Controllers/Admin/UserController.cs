@@ -140,6 +140,13 @@ namespace Blog.Controllers.Admin
             {
                 var user = db.Users.FirstOrDefault(u => u.Id.Equals(id));
 
+                var userArticles = db.Articles.Where(a => a.AuthorId == user.Id);
+
+                foreach (var article in userArticles)
+                {
+                    db.Articles.Remove(article);
+                }
+
                 db.Users.Remove(user);
                 db.SaveChanges();
 

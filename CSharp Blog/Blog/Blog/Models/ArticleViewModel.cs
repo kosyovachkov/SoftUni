@@ -6,16 +6,12 @@ using System.Web;
 
 namespace Blog.Models
 {
-    
-
-
     public class ArticleViewModel
     {
         public ArticleViewModel()
         {
             this.Date = DateTime.Now;
         }
-
 
         public int Id { get; set; }
 
@@ -43,11 +39,11 @@ namespace Blog.Models
         [Display(Name ="Категория")]
         public int CategoryId { get; set; }
 
+        [Required]
         [Display(Name ="Тагове")]
         public string Tags { get; set; }
 
         public List<Category> Categories { get; set; }
-
         
     }
 }

@@ -23,10 +23,13 @@
                 }
                 на <i>@article.Date</i>
             </small>
+            <smal class="author">
+                Категория: <span style="font-style:italic">@Html.ActionLink(@article.Category.Name, "ListArticlesOfCategory", "Category", new { @id = article.Category.Id }, null)</span>
+            </smal>
             <p>
             <p>
                 <div>
-                    <img class="img-responsive" src="@article.Image" width="600">
+                    <img class="img-responsive" src="@article.Image" style="float:right; margin-left:5px"  width="600">
                 </div>
                 <p>
                 <div>
@@ -34,16 +37,27 @@
                 </div>
             </p>
 
-            <footer class="pull-right">
-                @if (User.IsInRole("Administrators") || (article.Author != null && article.Author.UserName.Equals(User.Identity.Name)))
+            <footer>
+                @if (article.Tags.Count > 0)
                 {
-                    @Html.ActionLink("Редактирай", "Edit", "Articles", new { @id = article.Id }, new { @class = "btn btn-success" })
-                    @:
-                    @Html.ActionLink("Изтрий", "Delete", "Articles", new { @id = article.Id }, new { @class = "btn btn-danger" })
+                    <div class="pull-left" style="margin-top:5px">
+                        @foreach (var tag in article.Tags)
+                        {
+                            <span> @Html.ActionLink(tag.Name, "ListArticlesByTag", "Tag", new { @id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
+                        }
+                    </div>
                 }
+                <div class="pull-right">
+                    @if (User.IsInRole("Administrators") || (article.Author != null && article.Author.UserName.Equals(User.Identity.Name)))
+                {
+                        @Html.ActionLink("Редактирай", "Edit", "Articles", new { @id = article.Id }, new { @class = "btn btn-success" })
+                        @:
+                        @Html.ActionLink("Изтрий", "Delete", "Articles", new { @id = article.Id }, new { @class = "btn btn-danger" })
+                    }
 
-                @Html.ActionLink("Начало", "Index", "Home", null, new { @class = "btn btn-primary" })
-            </footer>
+                    @Html.ActionLink("Начало", "Index", "Home", null, new { @class = "btn btn-primary" })
+                    </div>
+</footer>
         </article>
     </div>
 }

@@ -87,6 +87,7 @@ namespace Blog.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Get current logged user
                 var user = db.Users.FirstOrDefault(u => u.UserName == User.Identity.Name);
 
 
