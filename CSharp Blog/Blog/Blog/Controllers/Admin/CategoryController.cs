@@ -20,6 +20,7 @@ namespace Blog.Controllers.Admin
             return View(db.Categories.ToList());
         }
 
+        [Authorize(Roles = "Administrators")]
         public ActionResult List()
         {
             var categories = db.Categories.ToList();
@@ -55,6 +56,7 @@ namespace Blog.Controllers.Admin
         }
 
         // GET: Category/Create
+        [Authorize(Roles = "Administrators")]
         public ActionResult Create()
         {
             return View();
@@ -63,6 +65,7 @@ namespace Blog.Controllers.Admin
         // POST: Category/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrators")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name")] Category category)
@@ -78,6 +81,7 @@ namespace Blog.Controllers.Admin
         }
 
         // GET: Category/Edit/5
+        [Authorize(Roles = "Administrators")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -95,6 +99,7 @@ namespace Blog.Controllers.Admin
         // POST: Category/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Administrators")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Name")] Category category)
@@ -109,6 +114,7 @@ namespace Blog.Controllers.Admin
         }
 
         // GET: Category/Delete/5
+        [Authorize(Roles = "Administrators")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -124,6 +130,7 @@ namespace Blog.Controllers.Admin
         }
 
         // POST: Category/Delete/5
+        [Authorize(Roles = "Administrators")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

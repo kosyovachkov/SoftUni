@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -21,7 +22,7 @@ namespace Blog.Controllers
 
             if (id == null)
             {
-
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             using (var db = new BlogDbContext())

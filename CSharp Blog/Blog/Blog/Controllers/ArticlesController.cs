@@ -38,6 +38,7 @@ namespace Blog.Controllers
 
 
         // GET: Articles/Articles
+        [Authorize(Roles = "Administrators")]
         public ActionResult Articles()
         {
             var articlesWithAuthors = db.Articles
