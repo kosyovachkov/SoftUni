@@ -108,7 +108,7 @@ namespace Blog.Controllers.Admin
             {
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("List");
             }
             return View(category);
         }
@@ -138,7 +138,7 @@ namespace Blog.Controllers.Admin
             Category category = db.Categories.Find(id);
             db.Categories.Remove(category);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("List");
         }
 
         protected override void Dispose(bool disposing)
