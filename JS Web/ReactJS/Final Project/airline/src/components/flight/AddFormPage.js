@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import request from '../../scripts/requester';
 import validate from '../helpers/validateFlight';
 
-import FlightForm from './FlightForm';
+import FlightForm from './forms/FlightForm';
 
 export default class AddForm extends Component {
   constructor(props) {

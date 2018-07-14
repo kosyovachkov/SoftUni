@@ -1,21 +1,22 @@
 import React from 'react';
 import { Route} from 'react-router-dom';
 
-import ListFlights from './../flight/ListFlights'
-import AllFlights from './../flight/AllFlights'
-import MyFlights from './../flight/MyFlights'
-import LoginForm from './../user/LoginForm'
-import RegisterForm from './../user/RegisterForm'
+import LoginPage from '../user/LoginPage'
+import RegisterPage from './../user/RegisterPage'
+import Logout from '../user/Logout';
+
+import ListFlights from '../flight/ListFlightsPage'
+import AllFlights from '../flight/AllFlightsPage'
+import MyFlights from '../flight/MyFlightsPage'
 import AddForm from '../flight/AddFormPage'
 import EditForm from '../flight/EditFormPage'
-import Details from './../flight/Details'
-import Logout from '../user/Logout';
+import Details from '../flight/DetailsPage'
 
 const AppRoutes = ()=>(
     <div>
-    <Route path='/' exact component={LoginForm}/>
-    <Route path='/login'  component={LoginForm}/>
-    <Route path='/register'  component={RegisterForm}/>
+    <Route path='/' exact component={LoginPage}/>
+    <Route path='/login'  component={LoginPage}/>
+    <Route path='/register'  component={RegisterPage}/>
     <Route path='/logout'  component={Logout}/>
     <Route path='/list'  component={ListFlights}/>
     <Route path='/add'  component={AddForm}/>

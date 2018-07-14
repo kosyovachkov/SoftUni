@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import '../../static/css/style.css';
+import '../../../static/css/style.css';
 
 const Flight = props => (
   <span className="added-flight">

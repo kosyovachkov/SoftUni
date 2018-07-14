@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import requester from '../../scripts/requester';
 import '../../static/css/style.css';
 
-import MyFlight from './MyFlight';
+import MyFlight from './entities/MyFlight';
 
 export default class MyFlights extends Component {
   constructor(props) {

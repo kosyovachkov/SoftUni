@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import requester from '../../scripts/requester';
 import '../../static/css/style.css';
 
-import PublicFlight from './PublicFlight';
+import PublicFlight from './entities/PublicFlight';
 
 export default class ListFlights extends Component {
   constructor(props) {
