@@ -1,0 +1,58 @@
+﻿@model Blog.Models.Article
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+    <article>
+        <header>
+            <h2>
+                @Model.Title
+            </h2>
+        </header>
+        <small class="author ">
+            Публикувано
+            @if (Model.Author != null)
+            {
+                @:от
+                <i>@Model.Author.FullName (@Model.Author.UserName)</i>
+            }
+            на <i>@Model.Date</i>
+        </small>
+        <smal class="author">
+            Категория: <span style="font-style:italic">@Html.ActionLink(@Model.Category.Name, "ListArticlesOfCategory", "Category", new { @id = Model.Category.Id }, null)</span>
+        </smal>
+        <p>
+            <div style="float:right; margin-left:5px"><img src="@Model.Image" width="800"></div>
+        <p>
+            @Html.Raw(Model.Content)
+        </p>
+        
+        <footer>
+            @if (Model.Tags.Count > 0)
+            {
+                <hr>
+                <h4>Тагове към статията</h4>
+            }
+            <div class="pull-left">
+                @foreach (var tag in Model.Tags)
+                {
+                    <span>@Html.ActionLink(tag.Name, "ListArticlesByTag", "Tag", new { @id = tag.Id }, new { @class = "btn btn-default btn-xs" })</span>
+                }
+            </div>
+
+
+            <div class="pull-right">
+            @if (User.IsInRole("Administrators") || (Model.Author != null && Model.Author.UserName.Equals(User.Identity.Name)))
+            {
+                @Html.ActionLink("Редактирай", "Edit", "Articles", new { @id = Model.Id }, new { @class = "btn btn-success" })
+                @: 
+                @Html.ActionLink("Изтрий", "Delete", "Articles", new { @id = Model.Id }, new { @class = "btn btn-danger" })
+            }
+
+            @Html.ActionLink("Начало", "Index", "Home", null, new { @class = "btn btn-primary" })
+            </div>
+        </footer>
+    </article>
+</div>
