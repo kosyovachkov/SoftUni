@@ -19,7 +19,7 @@ export class CartService {
       this.cartStateTotalSum.next(total);
   }
 
-  getOrder() {
+  getOrders() {
     return this.allOrders;
   }
 
@@ -35,7 +35,10 @@ export class CartService {
     if (allOrdersId.indexOf(purchasedId) > -1) {
       let indexOfOrder = allOrdersId.indexOf(purchasedId)
       let count = this.allOrders.find(e => e.flightId === purchasedId).tickets
+      let subTotal = this.allOrders.find(e => e.flightId === purchasedId).subTotal
+
       order.tickets += count
+      order.subTotal+=subTotal
 
       this.allOrders.splice(indexOfOrder, 1)
       //this.deleteOrder(order.flightId)
@@ -59,6 +62,10 @@ export class CartService {
 
     this.navBarService.setNavBarStateOrders(this.allOrders.length)
     this.router.navigateByUrl('/cart')
+  }
+
+  checkout(){
+    this.navBarService.setNavBarStateOrders(0)
   }
 
   totalPrice() {

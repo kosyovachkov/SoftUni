@@ -16,7 +16,8 @@ import { AuthTokenInterceptor } from './interceptors/authtoken.interceptor'
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { AuthService } from './authentication/auth.service';
 import { NavBarService } from './navigation/navbar.service';
-import { CartService } from './cart/cart-service'
+import { CartService } from './cart/cart-service';
+import { FlightService } from './flights/flight.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { CartService } from './cart/cart-service'
       multi: true
     }, 
     NavBarService,
-    CartService
+    CartService,
+    FlightService
   ],
   bootstrap: [AppComponent]
 })

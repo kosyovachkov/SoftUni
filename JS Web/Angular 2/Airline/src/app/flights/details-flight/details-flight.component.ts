@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DetailedModel } from '../models/detailed.model';
 import { CartFlightModel } from '../../cart/cartFlight-model';
@@ -38,7 +38,7 @@ import { CartService } from '../../cart/cart-service';
     ])
   ]
 })
-export class DetailsFlightComponent implements OnInit {
+export class DetailsFlightComponent implements OnInit, OnDestroy {
   id = this.route.snapshot.params.id;
 
   constructor(
@@ -47,7 +47,7 @@ export class DetailsFlightComponent implements OnInit {
     private router: Router,
     private auth: AuthService,
     private fb: FormBuilder,
-    private orderService: CartService
+    private cartService: CartService
   ) {}
 
   singleFlight: DetailedModel;
@@ -55,8 +55,8 @@ export class DetailsFlightComponent implements OnInit {
   cartForm: FormGroup;
   isCreator: boolean = false;
   subtotal: number;
-  // isAvailableSeats: boolean;
-  // availableSeats: number;
+  isAvailableSeats: boolean;
+  availableSeats: number;
 
   ngOnInit() {
     this.flightService.details(this.id).subscribe(res => {
@@ -64,18 +64,17 @@ export class DetailsFlightComponent implements OnInit {
       if (res['_acl']['creator'] === this.auth.userId) {
         this.isCreator = true;
       }
-      // localStorage.setItem('seats', `${res.seats}`);
-      // this.availableSeats = Number(localStorage.getItem('seats'));
+      localStorage.setItem('seats', `${res.seats}`);
+      this.availableSeats = Number(localStorage.getItem('seats'));
       this.subtotal = this.singleFlight.cost
 
       this.cartForm = this.fb.group({
         numberOfTickets: ['1', [Validators.max(this.singleFlight.seats), Validators.min(1)]]
       });
 
-      // this.isAvailableSeats =
-      //   this.singleFlight.seats >= Number(localStorage.getItem('seats'));
       // this.subtotal = this.singleFlight.cost;
-
+      
+      this.isAvailableSeats = this.singleFlight.seats > 0;
       this.cartForm.valueChanges.subscribe(res => {
         this.subtotal = res.numberOfTickets * this.singleFlight.cost;
       });
@@ -83,23 +82,28 @@ export class DetailsFlightComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(){
+    localStorage.removeItem('seats');
+  }
+
   buy(value) {
-    // console.log(this.singleFlight);
     let flightId = this.id;
     let tickets = value.numberOfTickets;
-    // let availableTickets = Number(localStorage.getItem('seats'))
 
-    // if (tickets >= availableTickets) {
-    //   tickets = availableTickets;
-    // }
-    // this.singleFlight.seats -= tickets;
+    if (tickets >= this.availableSeats) {
+      tickets = this.availableSeats;
+    }
+    //this.singleFlight.seats -= tickets;
 
     const {
       destination,
       origin,
       departureDate,
+      departureTime,
+      seats,
       cost,
-      seats
+      image,
+      isPublished
     } = this.singleFlight;
 
     let subTotal = this.subtotal;
@@ -109,14 +113,19 @@ export class DetailsFlightComponent implements OnInit {
       destination,
       origin,
       departureDate,
-      cost,
+      departureTime,
       seats,
+      cost,
+      image,
+      isPublished,
       tickets,
       subTotal
     };
     // let updatedSeatsInModel = this.singleFlight;
 
-    this.orderService.insertOrder(order);
+    this.cartService.insertOrder(order);
+    //this.flightService.edit(flightId, order).subscribe();
+    
     this.router.navigateByUrl('/flight/public');
   }
 }

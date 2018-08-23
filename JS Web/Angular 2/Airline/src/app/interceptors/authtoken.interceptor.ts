@@ -22,22 +22,32 @@ export class AuthTokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     let authtoken = localStorage.getItem('authtoken');
+    let seats = localStorage.getItem('seats')
+    let displayCart = localStorage.getItem('displayCart')
 
-    if (authtoken) {
+    if (displayCart) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Basic ${btoa(
+            kinveyAuth.appKey + ':' + kinveyAuth.appMasterSecret
+          )}`
+        }
+      })
+    } else if (authtoken) {
       request = request.clone({
         setHeaders: {
           Authorization: `Kinvey ${authtoken}`
         }
       });
-    }  else if(!authtoken && request.url.endsWith(`?query={"isPublished":true}&limit=3`)) {
+    } else if (!authtoken && request.url.endsWith(`?query={"isPublished":true}&limit=3`)) {
       request = request.clone({
-        setHeaders:{
-          Authorization:`Basic ${btoa(
+        setHeaders: {
+          Authorization: `Basic ${btoa(
             kinveyAuth.appKey + ':' + kinveyAuth.appMasterSecret
           )}`
         }
       })
-    }else {
+    } else {
       request = request.clone({
         setHeaders: {
           Authorization: `Basic ${btoa(

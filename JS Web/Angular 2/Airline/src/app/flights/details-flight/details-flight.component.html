@@ -18,7 +18,7 @@
             </div>
         </div>
     </div>
-    <form (ngSubmit)='buy(cartForm.value)' [formGroup]='cartForm'>
+    <form *ngIf='isAvailableSeats' (ngSubmit)='buy(cartForm.value)' [formGroup]='cartForm'>
         <div>
             <label style="margin-right: 5px">Number of tickets </label>
             <input class="ticketInput" type="number" formControlName='numberOfTickets' step="1" name="tickets" placeholder="0">
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div>
-                <input type="submit" class="btn btn-outline-primary" [disabled]='cartForm.invalid' value='Buy'>
+                <input type="submit" class="btn btn-outline-info" [disabled]='cartForm.invalid' value='Buy'>
             </div>
         </div>
     </form>

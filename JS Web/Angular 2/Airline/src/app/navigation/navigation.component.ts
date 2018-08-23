@@ -48,7 +48,7 @@ export class NavigationComponent implements OnInit {
   // }
 
   logout() {
-    this.auth.logout();
     this.toastr.success('Logout successfull.', 'Success!');
+    this.auth.logout();
   }
 }

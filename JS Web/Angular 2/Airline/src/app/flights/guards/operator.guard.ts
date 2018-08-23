@@ -6,8 +6,6 @@ import { AuthService } from '../../authentication/auth.service';
 export class OperatorGuard implements CanActivate {
     constructor(private auth: AuthService, private route: Router) { }
     canActivate() {
-        console.log(this.auth.isOperator());
-        
         if (this.auth.isAuthenticated() && this.auth.isOperator()) {
             return true
         }
