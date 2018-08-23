@@ -1,0 +1,91 @@
+<section *ngIf='flightToEdit' id="viewEditFlight" class="background-img-create">
+  <h2 [@fieldFromTop]>Edit existing flight</h2>
+  <form (ngSubmit)='edit(editForm.value)' [formGroup]='editForm' id="formEditFlight">
+    <div [@fieldFromLeft]>
+    <label>Destination:</label>
+    <input type="text" name="destination" formControlName='destination' placeholder="Destination" value="{{flightToEdit.destination | titlecase}}">
+    </div>
+    <div *ngIf="(editForm.get('destination').touched || 
+      editForm.get('destination').dirty) && editForm.get('destination').errors" class="alert alert-danger">
+      <div *ngIf="editForm.get('destination').hasError('required')">
+        Destination can`t be an empty string.
+      </div>
+      <div *ngIf="editForm.get('destination').hasError('minlength')">
+        Destination must be at least 3 characters long.
+      </div>
+    </div>
+    <div [@fieldFromRight]>
+    <label>Origin:</label>
+    <input type="text" name="origin" formControlName='origin' placeholder="Origin" value="{{flightToEdit.origin | titlecase}}">
+    </div>
+    <div *ngIf="(editForm.get('origin').touched || 
+    editForm.get('origin').dirty) && 
+    editForm.get('origin').errors" class='alert alert-danger'>
+      <div *ngIf="editForm.get('origin').hasError('required')">
+        Origin can`t be an empty string.
+      </div>
+      <div *ngIf="editForm.get('origin').hasError('minlength')">
+        Origin must be at least 3 characters long.
+      </div>
+    </div>
+    <div [@fieldFromLeft]>
+    <label>Departure Date:</label>
+    <input type="date" name="departureDate" formControlName='departureDate' value="{{flightToEdit.departureDate}}">
+    </div>
+    <div *ngIf="(editForm.get('departureDate').touched || 
+    editForm.get('departureDate').dirty) && 
+    editForm.get('departureDate').errors" class='alert alert-danger'>
+      <div *ngIf="editForm.get('departureDate').hasError('required')">
+        DepartureDate is required.
+      </div>
+    </div>
+    <div [@fieldFromRight]>
+    <label>Departure Time:</label>
+    <input type="time" name="departureTime" formControlName='departureTime' value="{{flightToEdit.departureTime}}">
+    </div>
+    <div *ngIf="(editForm.get('departureTime').touched || 
+    editForm.get('departureTime').dirty) && 
+    editForm.get('departureTime').errors" class='alert alert-danger'>
+      <div *ngIf="editForm.get('departureTime').hasError('required')">
+        DepartureTime is required.
+      </div>
+    </div>
+    <div [@fieldFromLeft]>
+    <label>Number of Seats:</label>
+    <input type="number" name="seats" formControlName='seats' value="{{flightToEdit.seats}}">
+    </div>
+    <div *ngIf="(editForm.get('seats').touched || 
+      editForm.get('seats').dirty) && 
+      editForm.get('seats').errors" class='alert alert-danger'>
+      <div *ngIf="editForm.get('seats').hasError('required')">
+        Seats can`t be an empty string.
+      </div>
+      <div *ngIf="editForm.get('seats').hasError('min')">
+        Seats must be greater than 10.
+      </div>
+    </div>
+    <div [@fieldFromRight]>
+    <label>Cost per seat:</label>
+    <input type="number" step="1" name="cost" formControlName='cost' value="{{flightToEdit.cost}}">
+    </div>
+    <div *ngIf="(editForm.get('cost').touched || 
+    editForm.get('cost').dirty) && 
+    editForm.get('cost').errors" class='alert alert-danger'>
+      <div *ngIf="editForm.get('cost').hasError('required')">
+        Cost can`t be an empty string.
+      </div>
+      <div *ngIf="editForm.get('cost').hasError('min')">
+        Cost must be greater than 0.99.
+      </div>
+    </div>
+    <div [@fieldFromLeft]>
+    <label>Image:</label>
+    <input type="text" name="img" formControlName='image' value="{{flightToEdit.image}}">
+    </div>
+    <div [@fieldFromRight]>
+    <label>Is Public:</label>
+    <input type="checkbox" name="isPublished" formControlName='isPublished' value="isPublished">
+    </div>
+    <input type="submit" [@fieldFromBottom] [disabled]='editForm.invalid' class="save-changes" value="Save Changes">
+  </form>
+</section>

@@ -1,0 +1,20 @@
+<div class="background-img-search">
+  <div class="jumbotron text-center" [@fieldFromTop] style="background-color:rgba(193, 193, 216, 0.7) !important; height: 410px;">
+    <div class="container">
+      <h1>Search all public flights</h1>
+      <form (ngSubmit)='search()' [formGroup]='searchForm' id="searchForm">
+        <label>Destination</label>
+        <div class="input-group input-group-lg">
+          <input class="form-control" formControlName='destination' placeholder="Destination" type="text">
+        </div>
+        <label>Origin</label>
+        <div class="input-group input-group-lg">
+          <input class="form-control" formControlName='origin' placeholder="Origin" type="text">
+        </div>
+        <div class="input-group input-group-lg">
+          <input  type="Submit" class="login" [disabled]='isEmpty' value="Search">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

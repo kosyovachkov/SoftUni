@@ -1,0 +1,22 @@
+<section id="viewCatalog" class="background-img">
+  <div *ngIf='isResult' class="added-flights">
+    <div *ngFor='let flight of searchedPublicFlights | paginate:{id:"surchedResultPaginate", itemsPerPage:pageSize, currentPage:currentPage}'
+      [@searchedResultFlights] class="added-flight">
+      <a routerLink='/flight/details/{{flight._id}}'>
+        <img src="{{flight.image}}" alt="" class="picture-added-flight">
+        <h3>{{flight.destination | titlecase}}</h3>
+        <span>{{flight.origin | titlecase}}</span>
+        <span>{{flight.departureDate | date}}</span>
+      </a>
+    </div>
+  </div>
+  <div *ngIf='!isResult' class="added-flights">
+    <h1> There is no public flights for this search.</h1>
+  </div>
+</section>
+<div style="text-align: center">
+  <pagination-controls id="surchedResultPaginate" (pageChange)="pageChanged($event)" maxSize="2" directionLinks="true" autoHide="true"
+    responsive="true" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+    screenReaderCurrentLabel="You're on page">
+  </pagination-controls>
+</div>

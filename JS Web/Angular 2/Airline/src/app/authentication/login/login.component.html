@@ -1,0 +1,28 @@
+<section id="viewLogin" class="background-img-home">
+    <h2 [@fieldFromTop]>Login to your account:</h2>
+    <form (ngSubmit)='login()' [formGroup]='loginForm' id="formLogin">
+        <div [@fieldFromLeft]>
+            <label>Username:</label>
+            <input type="text" name="username" formControlName='username' placeholder="Enter your Username">
+        </div>
+        <div *ngIf="(loginForm.get('username').touched || 
+            loginForm.get('username').dirty) && 
+            loginForm.get('username').errors" class='alert alert-danger'>
+            <div *ngIf="loginForm.get('username').hasError('required')">
+                Username can`t be an empty string.
+            </div>
+        </div>
+        <div [@fieldFromRight]>
+            <label>Password:</label>
+            <input type="password" name="pass" formControlName='password' placeholder="Enter your Password">
+        </div>
+        <div *ngIf="(loginForm.get('password').touched || 
+            loginForm.get('password').dirty) && 
+            loginForm.get('password').errors" class='alert alert-danger'>
+            <div *ngIf="loginForm.get('password').hasError('required')">
+                Password can`t be an empty string.
+            </div>
+        </div>
+        <input type="submit" [@fieldFromBottom] [disabled]='loginForm.invalid' class="login" value="Login">
+    </form>
+</section>

@@ -1,0 +1,23 @@
+<nav>
+  <div >
+      <ul>
+          <!-- <li><a routerLink=''>Home</a></li> -->
+          <li *ngIf='!auth.isAuthenticated()'><a routerLink='/'>Home</a></li>
+          <li *ngIf='!auth.isAuthenticated()'><a routerLink='/login'>Login</a></li>
+          <li  *ngIf='!auth.isAuthenticated()'><a routerLink='/register'>Register</a></li>
+          <li *ngIf='auth.isAuthenticated()'><a routerLink='/flight/public'>Public flights</a></li>
+          <li *ngIf='auth.isOperator()'><a routerLink='/flight/create'>Create flight</a></li>
+          <li *ngIf='auth.isOperator()'><a routerLink='/flight/my'>My flights</a></li>
+          <li *ngIf='auth.isAdmin()'><a routerLink='/flight/all'>All flights</a></li>
+          <li *ngIf='auth.isAuthenticated()'><a routerLink='/flight/search'>Search flights</a></li>
+          <!-- <li *ngIf='auth.isAdmin()'><a href="">My Tickets</a></li> -->
+          <!-- <li *ngIf='auth.isAdmin()'><a routerLink='/flight/all'>All Flights</a></li> -->
+      </ul>
+  </div>
+  <div *ngIf='auth.isAuthenticated()'>
+      <span>Welcome, {{name}} | </span>
+      <a routerLink='/cart'><img src="../../assets/img/cart.png" alt="" class="cart">You have {{orders}} orders </a>
+      <a  href="" (click)='logout()' class="log-out">Logout</a>
+      <!-- <a href=""><img src="" alt="" class="cart"></a> -->
+  </div>
+</nav>

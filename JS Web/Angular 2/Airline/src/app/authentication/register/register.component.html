@@ -1,0 +1,65 @@
+<section id="viewRegister" class="background-img-home">
+    <h2 [@fieldFromTop]>Create your account:</h2>
+    <form (ngSubmit)='register()' [formGroup]='registerForm' id="formRegister">
+        <div [@fieldFromLeft]>
+            <label>Username:</label>
+            <input type="text" name="username" formControlName='username' placeholder="Username">
+        </div>
+        <div *ngIf="(registerForm.get('username').touched || 
+            registerForm.get('username').dirty) && 
+            registerForm.get('username').errors" class='alert alert-danger'>
+            <div *ngIf="registerForm.get('username').hasError('required')">
+                Username can`t be an empty string.
+            </div>
+            <div *ngIf="registerForm.get('username').hasError('minlength')">
+                Username must be at least 4 characters long.
+            </div>
+        </div>
+        <div [@fieldFromRight]>
+            <label>Email:</label>
+            <input type="email" name="email" formControlName='email' placeholder="Email">
+        </div>
+        <div *ngIf="(registerForm.get('email').touched || 
+            registerForm.get('email').dirty) && 
+            registerForm.get('email').errors" class='alert alert-danger'>
+            <div *ngIf="registerForm.get('email').hasError('required')">
+                Email can`t be an empty string.
+            </div>
+            <div *ngIf="registerForm.get('email').hasError('email')">
+                Email format is not valid.
+            </div>
+        </div>
+        <div [@fieldFromLeft]>
+            <label>Password:</label>
+            <input type="password" name="pass" formControlName='password' placeholder="Password">
+        </div>
+        <div *ngIf="(registerForm.get('password').touched || 
+            registerForm.get('password').dirty) && 
+            registerForm.get('password').errors" class='alert alert-danger'>
+            <div *ngIf="registerForm.get('password').hasError('required')">
+                Password can`t be an empty string.
+            </div>
+            <div *ngIf="registerForm.get('password').hasError('minlength')">
+                Password must be at least 4 characters long.
+            </div>
+        </div>
+        <div [@fieldFromRight]>
+            <label>Repeat Password:</label>
+            <input type="password" name="checkPass" formControlName='checkPass' placeholder="Repeat Password">
+        </div>
+        <div *ngIf="(registerForm.get('checkPass').touched || 
+        registerForm.get('checkPass').dirty) && 
+        registerForm.get('checkPass').errors" class='alert alert-danger'>
+            <div *ngIf="registerForm.get('checkPass').hasError('required')">
+                Password can`t be an empty string.
+            </div>
+            <div *ngIf="registerForm.get('checkPass').hasError('minlength')">
+                Password must be at least 4 characters long.
+            </div>
+            <div *ngIf="registerForm.get('checkPass').hasError('MatchPassword')">
+                Passwords doesn`t match.
+            </div>
+        </div>
+        <input type="submit" [@fieldFromBottom] [disabled]='registerForm.invalid' class="register" value="Register">
+    </form>
+</section>

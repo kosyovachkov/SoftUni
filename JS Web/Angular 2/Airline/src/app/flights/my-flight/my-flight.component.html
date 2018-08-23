@@ -1,0 +1,30 @@
+<section id="viewMyFlights" class="background-img-my">
+    <h2 [@titleInitialize]>My flights</h2>
+    <div *ngIf='myFlights'>
+        <div *ngFor='let flight of myFlights | paginate:{id:"myPaginate", itemsPerPage:pageSize, currentPage:currentPage}' [@myFlightInitialize]
+            class="flight-entity">
+            <div class="flight-left">
+                <img src="{{flight.image}}" alt="">
+            </div>
+            <div class="flight-right">
+                <div>
+                    <h3>{{flight.destination | titlecase}}</h3>
+                    <span>{{flight.departureDate | date}}</span>
+                </div>
+                <div>
+                    from {{flight.origin | titlecase}}
+                    <span>{{flight.departureTime}}</span>
+                </div>
+                <p>{{flight.seats}} Seats ({{flight.cost}}$ per seat) </p>
+                <a routerLink='/flight/my'  (click)='delete(flight._id)' class="remove">REMOVE</a>
+                <a routerLink='/flight/edit/{{flight._id}}' class="details">Edit</a>
+            </div>
+        </div>
+    </div>
+</section>
+<div style="text-align: center">
+    <pagination-controls id="myPaginate" (pageChange)="pageChanged($event)" maxSize="2" directionLinks="true" autoHide="true"
+        responsive="true" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+        screenReaderCurrentLabel="You're on page">
+    </pagination-controls>
+</div>

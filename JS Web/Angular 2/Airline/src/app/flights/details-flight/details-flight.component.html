@@ -1,0 +1,40 @@
+<section *ngIf='singleFlight' id="viewFlightDetails">
+    <div class="flight-area">
+        <div class="flight-entity">
+            <div class="flight-left" [@flightImage]>
+                <img src="{{singleFlight.image}}" alt="">
+            </div>
+            <div class="flight-area-right" [@flightInfo]>
+                <h3>{{singleFlight.destination | titlecase}}</h3>
+                <div>from {{singleFlight.origin | titlecase}}</div>
+                <div class="data-and-time">
+                    {{singleFlight.departureDate | date}}
+                    <a *ngIf='isCreator||auth.isAdmin()' routerLink='/flight/edit/{{singleFlight._id}}' class="edit-flight-detail"></a>
+                    <a *ngIf='!isCreator && !auth.isAdmin()' class="no-flight-detail"></a>
+                </div>
+                <div>
+                    {{singleFlight.seats}} Seats ({{singleFlight.cost}} per seat)
+                </div>
+            </div>
+        </div>
+    </div>
+    <form (ngSubmit)='buy(cartForm.value)' [formGroup]='cartForm'>
+        <div>
+            <label style="margin-right: 5px">Number of tickets </label>
+            <input class="ticketInput" type="number" formControlName='numberOfTickets' step="1" name="tickets" placeholder="0">
+            <span class="infoblocks">Current price: {{subtotal}} lv.</span>
+            <div *ngIf="(cartForm.get('numberOfTickets').touched || cartForm.get('numberOfTickets').dirty) && cartForm.get('numberOfTickets').errors"
+                class='alert alert-danger'>
+                <div *ngIf="cartForm.get('numberOfTickets').hasError('max')">
+                    Number of tickets cant be more than free seats.
+                </div>
+                <div *ngIf="cartForm.get('numberOfTickets').hasError('min')">
+                    Numbers of tickets must be a possitive number.
+                </div>
+            </div>
+            <div>
+                <input type="submit" class="btn btn-outline-primary" [disabled]='cartForm.invalid' value='Buy'>
+            </div>
+        </div>
+    </form>
+</section>

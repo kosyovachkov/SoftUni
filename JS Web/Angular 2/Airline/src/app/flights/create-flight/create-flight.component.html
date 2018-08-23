@@ -1,0 +1,91 @@
+<section id="viewAddFlight" class="background-img-create">
+  <h2 [@fieldFromTop]>Add new flight</h2>
+  <form (ngSubmit)='create()' [formGroup]='createForm' id="formAddFlight">
+    <div [@fieldFromLeft]>
+    <label>Destination:</label>
+    <input type="text" name="destination" formControlName='destination' placeholder="Destination">
+    </div>
+    <div *ngIf="(createForm.get('destination').touched || 
+      createForm.get('destination').dirty) && createForm.get('destination').errors" class="alert alert-danger">
+      <div *ngIf="createForm.get('destination').hasError('required')">
+        Destination can`t be an empty string.
+      </div>
+      <div *ngIf="createForm.get('destination').hasError('minlength')">
+        Destination must be at least 3 characters long.
+      </div>
+    </div>
+    <div [@fieldFromRight]>
+    <label>Origin:</label>
+    <input type="text" name="origin" formControlName='origin' placeholder="Origin">
+    </div>
+    <div *ngIf="(createForm.get('origin').touched || 
+    createForm.get('origin').dirty) && 
+    createForm.get('origin').errors" class='alert alert-danger'>
+      <div *ngIf="createForm.get('origin').hasError('required')">
+        Origin can`t be an empty string.
+      </div>
+      <div *ngIf="createForm.get('origin').hasError('minlength')">
+        Origin must be at least 3 characters long.
+      </div>
+    </div>
+    <div [@fieldFromLeft]>
+    <label>Departure Date:</label>
+    <input type="date" formControlName='departureDate' name="departureDate">
+    </div>
+    <div *ngIf="(createForm.get('departureDate').touched || 
+    createForm.get('departureDate').dirty) && 
+    createForm.get('departureDate').errors" class='alert alert-danger'>
+      <div *ngIf="createForm.get('departureDate').hasError('required')">
+        DepartureDate is required.
+      </div>
+    </div>
+    <div [@fieldFromRight]>
+    <label>Departure Time:</label>
+    <input type="time" formControlName='departureTime' name="departureTime">
+    </div>
+    <div *ngIf="(createForm.get('departureTime').touched || 
+    createForm.get('departureTime').dirty) && 
+    createForm.get('departureTime').errors" class='alert alert-danger'>
+      <div *ngIf="createForm.get('departureTime').hasError('required')">
+        DepartureTime is required.
+      </div>
+    </div>
+    <div [@fieldFromLeft]>
+    <label>Number of Seats:</label>
+    <input type="number" formControlName='seats' name="seats" placeholder="0">
+    </div>
+    <div *ngIf="(createForm.get('seats').touched || 
+    createForm.get('seats').dirty) && 
+    createForm.get('seats').errors" class='alert alert-danger'>
+      <div *ngIf="createForm.get('seats').hasError('required')">
+        Seats can`t be an empty string.
+      </div>
+      <div *ngIf="createForm.get('seats').hasError('min')">
+        Seats must be greater than 10.
+      </div>
+    </div>
+    <div [@fieldFromRight]>
+    <label>Cost per seat:</label>
+    <input type="number" formControlName='cost' step="1" name="cost" placeholder="0.00">
+    </div>
+    <div *ngIf="(createForm.get('cost').touched || 
+    createForm.get('cost').dirty) && 
+    createForm.get('cost').errors" class='alert alert-danger'>
+      <div *ngIf="createForm.get('cost').hasError('required')">
+        Cost can`t be an empty string.
+      </div>
+      <div *ngIf="createForm.get('cost').hasError('min')">
+        Cost must be greater than 0.99.
+      </div>
+    </div>
+    <div [@fieldFromLeft]>
+    <label>Image:</label>
+    <input type="text" formControlName='image' name="img">
+    </div>
+    <div [@fieldFromRight]>
+    <label>Is Public:</label>
+    <input type="checkbox" formControlName='isPublished' name="public">
+    </div>
+    <input type="submit" [@fieldFromBottom] [disabled]='createForm.invalid' class="create" value="Create">
+  </form>
+</section>

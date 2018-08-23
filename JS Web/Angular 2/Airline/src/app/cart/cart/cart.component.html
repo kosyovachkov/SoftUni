@@ -1,0 +1,33 @@
+<section class="background-img-cart">
+    <h2 [@fieldFromRight]>Shopping cart</h2>
+    <p  [@fieldFromRight] style="color:aliceblue;">Here you can view and edit your orders</p>            
+    <table class="table table-hover" [@fieldFromLeft]>
+      <thead>
+        <tr>
+          <th>Destination</th>
+          <th>Origin</th>
+          <th>DepartureDate</th>
+          <th>Price per ticket</th>
+          <th>Number of tickets</th>
+          <th>Total price</th>
+          <th>Operation</th>
+        </tr>
+      </thead>
+      <tbody *ngIf='cart'>
+        <tr *ngFor='let flight of cart' [@fieldToRight] >
+          <td>{{flight.destination}}</td>
+          <td>{{flight.origin}}</td>
+          <td>{{flight.departureDate}}</td>
+          <td>{{flight.cost}}</td>
+          <td>{{flight.tickets}}</td>
+          <td>{{flight.subTotal}}</td>
+          <td><button class="btn btn-outline-danger btn-xs" (click)='delete(flight.flightId, flight.tickets)'>DELETE</button></td>
+        </tr>
+        
+      </tbody>
+    </table>
+        <div style="float: right; margin-right: 60px; color:aliceblue; font-size: 2em" [@fieldFromLeft]>
+            Total cost: {{total}}
+        </div>
+  </section>
+  
