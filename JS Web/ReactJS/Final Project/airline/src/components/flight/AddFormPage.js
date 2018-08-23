@@ -17,8 +17,7 @@ export default class AddForm extends Component {
       seats: '',
       cost: '',
       img: '',
-      public: '',
-      checkbox: ''
+      public: ''
     };
   }
 
@@ -44,7 +43,7 @@ export default class AddForm extends Component {
     return (
       <section id="viewAddFlight">
         <h2>Add new flight</h2>
-        <FlightForm changeHandler={this.changeHandler} submitHandler={this.submitHandler} toggle={this.toggle} />
+        <FlightForm changeHandler={this.changeHandler} submitHandler={this.submitHandler} />
       </section>
     );
   }

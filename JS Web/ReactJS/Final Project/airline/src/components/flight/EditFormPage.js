@@ -17,8 +17,7 @@ export default class EditForm extends Component {
       seats: '',
       cost: '',
       img: '',
-      public: '',
-      checkbox: ''
+      public: ''
     };
 
     this.changeHandler = this.changeHandler.bind(this);
@@ -57,7 +56,7 @@ export default class EditForm extends Component {
     return (
       <section id="viewEditFlight">
         <h2>Edit existing flight</h2>
-        <FlightForm changeHandler={this.changeHandler} submitHandler={this.submitHandler} toggle={this.toggle} {...this.state} />
+        <FlightForm changeHandler={this.changeHandler} submitHandler={this.submitHandler} {...this.state} />
       </section>
     );
   }
