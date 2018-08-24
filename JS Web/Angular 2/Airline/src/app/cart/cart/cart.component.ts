@@ -40,8 +40,8 @@ import { FlightModel } from '../../flights/models/flight.model';
 })
 export class CartComponent implements OnInit, OnDestroy {
   cart: CartFlightModel[];
-  total: number;
-  entity: FlightModel
+  total: number; //to show total cost of all orders in the cart
+  entity: FlightModel; // to update the entity if seats are taken
 
   constructor(private cartService: CartService, private flightService: FlightService) {}
 
@@ -50,7 +50,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this.total = this.cartService.getTotal();
 
     this.cartService.cartState$.subscribe(state => (this.total = state));
-    localStorage.setItem('displayCart', 'true')
+    localStorage.setItem('displayCart', 'true');
     // console.log(this.cart);
     // this.total=this.cart.map(e=>e.tickets).reduce((a, b)=>a+b)
   }
@@ -61,29 +61,25 @@ export class CartComponent implements OnInit, OnDestroy {
     
     this.cartService.deleteOrder(id);
     
-    this.cartService.setCartState(this.total - sumToChange)
+    this.cartService.setCartState(this.total - sumToChange);
   }
   
   checkout(){
     for (let order of this.cart) {
-      console.log(order );
+      order.seats -= order.tickets;
 
-      order.seats -= order.tickets
-      
-      const {destination, origin, departureDate, departureTime, seats, cost, image, isPublished} = order
-
-      
-        this.entity = {destination, origin, departureDate, departureTime, seats, cost, image, isPublished}
-        
-        this.flightService.edit(order.flightId, this.entity).subscribe()
+      const {destination, origin, departureDate, departureTime, seats, cost, image, isPublished} = order;
+        this.entity = {destination, origin, departureDate, departureTime, seats, cost, image, isPublished};
+        this.flightService.edit(order.flightId, this.entity).subscribe();
       }
-      this.cart=[];
-      this.cartService.allOrders=[];
+
+      this.cart = [];
+      this.cartService.allOrders = [];
       this.cartService.setCartState(0);
       this.cartService.checkout();
   }
 
   ngOnDestroy(){
-    localStorage.removeItem('displayCart')
+    localStorage.removeItem('displayCart');
   }
 }

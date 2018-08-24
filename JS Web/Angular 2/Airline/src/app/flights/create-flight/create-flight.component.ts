@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FlightModel } from '../models/flight.model';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder
-} from '@angular/forms';
+import { FormGroup,  FormControl,  Validators,  FormBuilder} from '@angular/forms';
 import { FlightService } from '../flight.service';
 import {
   trigger,

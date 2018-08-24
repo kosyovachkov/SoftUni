@@ -35,9 +35,7 @@ export class HomeComponent implements OnInit {
   constructor(private flightService: FlightService) {}
   ngOnInit() {
     this.flightService.publicForHome().subscribe(res => {
-      this.flights = res.sort((a, b) =>
-        a.departureDate.localeCompare(b.departureDate)
-      );
+      this.flights = res.sort((a, b) => a.departureDate.localeCompare(b.departureDate));
     });
   }
 }

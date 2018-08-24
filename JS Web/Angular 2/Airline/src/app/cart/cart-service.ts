@@ -24,21 +24,21 @@ export class CartService {
   }
 
   getTotal() {
-    return this.totalPrice()
+    return this.totalPrice();
   }
 
   insertOrder(order: CartFlightModel) {
 
-    let allOrdersId = this.allOrders.map(e => e.flightId)
-    let purchasedId = order.flightId
+    let allOrdersId = this.allOrders.map(e => e.flightId);
+    let purchasedId = order.flightId;
 
     if (allOrdersId.indexOf(purchasedId) > -1) {
-      let indexOfOrder = allOrdersId.indexOf(purchasedId)
-      let count = this.allOrders.find(e => e.flightId === purchasedId).tickets
-      let subTotal = this.allOrders.find(e => e.flightId === purchasedId).subTotal
+      let indexOfOrder = allOrdersId.indexOf(purchasedId);
+      let count = this.allOrders.find(e => e.flightId === purchasedId).tickets;
+      let subTotal = this.allOrders.find(e => e.flightId === purchasedId).subTotal;
 
-      order.tickets += count
-      order.subTotal+=subTotal
+      order.tickets += count;
+      order.subTotal+=subTotal;
 
       this.allOrders.splice(indexOfOrder, 1)
       //this.deleteOrder(order.flightId)
@@ -48,9 +48,9 @@ export class CartService {
       this.allOrders.push(order);
     }
 
-    this.toastr.success('Order added to your cart.', 'Success!', {timeOut: 1300})
+    this.toastr.success('Order added to your cart.', 'Success!', {timeOut: 1300});
     
-    this.navBarService.setNavBarStateOrders(this.allOrders.length)
+    this.navBarService.setNavBarStateOrders(this.allOrders.length);
   }
 
   deleteOrder(orderId: string) {
@@ -58,20 +58,20 @@ export class CartService {
     let orderIndex = this.allOrders.indexOf(orderToDel);
     this.allOrders.splice(orderIndex, 1);
 
-    this.toastr.success('Order deleted from your cart.', 'Success', {timeOut: 1300})
+    this.toastr.success('Order deleted from your cart.', 'Success', {timeOut: 1300});
 
-    this.navBarService.setNavBarStateOrders(this.allOrders.length)
-    this.router.navigateByUrl('/cart')
+    this.navBarService.setNavBarStateOrders(this.allOrders.length);
+    this.router.navigateByUrl('/cart');
   }
 
   checkout(){
-    this.navBarService.setNavBarStateOrders(0)
+    this.navBarService.setNavBarStateOrders(0);
   }
 
   totalPrice() {
     let sum = 0;
     for (const order of this.allOrders) {
-      sum += (order.tickets * order.cost)
+      sum += (order.tickets * order.cost);
     }
     return sum
   }
