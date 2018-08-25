@@ -27,26 +27,6 @@ export class NavigationComponent implements OnInit {
     }
   }
 
-  // isAdmin(){
-  //   if(this.auth.isAdmin){
-  //     return true
-  //   }
-  //   return false
-  // }
-
-  // isAuthenticated(){
-  //   if(this.auth.isAuthenticated){
-  //     return true
-  //   }
-  //   return false
-  // }
-
-  // getCurrentLoggedInUsername(){
-  //   if (this.auth.isAuthenticated()) {
-  //     this.name = this.auth.username
-  //   }
-  // }
-
   logout() {
     this.toastr.success('Logout successfull.', 'Success!');
     this.auth.logout();

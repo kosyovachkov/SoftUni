@@ -62,10 +62,7 @@ export class LoginComponent implements OnInit {
   //   password: new FormControl('', [Validators.required])
   // });
 
-  constructor(private auth: AuthService,private fb: FormBuilder, private navBarService: NavBarService) {
-   // this.inputData = new LoginModel('', '');
-
-  }
+  constructor(private auth: AuthService,private fb: FormBuilder, private navBarService: NavBarService) { }
 
   ngOnInit() { 
     this.loginForm = this.fb.group({

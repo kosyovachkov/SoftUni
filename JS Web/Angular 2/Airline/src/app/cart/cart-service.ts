@@ -41,7 +41,6 @@ export class CartService {
       order.subTotal+=subTotal;
 
       this.allOrders.splice(indexOfOrder, 1)
-      //this.deleteOrder(order.flightId)
       this.allOrders.push(order);
 
     } else {
@@ -71,7 +70,7 @@ export class CartService {
   totalPrice() {
     let sum = 0;
     for (const order of this.allOrders) {
-      sum += (order.tickets * order.cost);
+      sum += (order.tickets * order.cost); //sum+=order.subTotal
     }
     return sum
   }

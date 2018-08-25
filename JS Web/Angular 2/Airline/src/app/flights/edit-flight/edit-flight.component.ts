@@ -93,7 +93,7 @@ export class EditFlightComponent implements OnInit {
         origin: [res.origin, [Validators.required, Validators.minLength(3)]],
         departureDate: [res.departureDate, [Validators.required]],
         departureTime: [res.departureTime, [Validators.required]],
-        seats: [res.seats, [Validators.required, Validators.min(10)]],
+        seats: [res.seats, [Validators.required]],
         cost: [res.cost, [Validators.required, Validators.min(0.99)]],
         image: [res.image],
         isPublished: [res.isPublished]

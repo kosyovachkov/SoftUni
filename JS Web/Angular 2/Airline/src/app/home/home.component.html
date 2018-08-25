@@ -5,7 +5,7 @@
       <a routerLink='/flight/details/{{flight._id}}'>
           <img src="{{flight.image}}" alt="" class="picture-added-flight">
           <h3>{{flight.destination}}</h3>
-          <span>{{flight.origin}}</span><span>{{flight.departureDate | date}}</span>
+          <span>From {{flight.origin}} |</span><span>{{flight.departureDate | date}}</span>
       </a>
       </div>
   </div>

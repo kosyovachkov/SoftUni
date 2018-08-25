@@ -50,7 +50,8 @@ export class CartComponent implements OnInit, OnDestroy {
     this.total = this.cartService.getTotal();
 
     this.cartService.cartState$.subscribe(state => (this.total = state));
-    localStorage.setItem('displayCart', 'true');
+
+    localStorage.setItem('displayCart', 'true'); //I`m using this for request with super credentilas in interceptor
     // console.log(this.cart);
     // this.total=this.cart.map(e=>e.tickets).reduce((a, b)=>a+b)
   }

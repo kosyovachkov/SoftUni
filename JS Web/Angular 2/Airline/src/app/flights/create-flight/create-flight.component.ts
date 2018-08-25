@@ -70,9 +70,7 @@ export class CreateFlightComponent implements OnInit {
 
   createForm: FormGroup;
 
-  constructor(private flightService: FlightService, private fb: FormBuilder) {
-    //this.flight = new FlightModel('', '', '', '', 0, 0, '', false);
-  }
+  constructor(private flightService: FlightService, private fb: FormBuilder) { }
 
   ngOnInit() {
     this.createForm = this.fb.group({

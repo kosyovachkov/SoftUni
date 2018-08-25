@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DetailedModel } from '../models/detailed.model';
 import { CartFlightModel } from '../../cart/cartFlight-model';
@@ -38,7 +38,7 @@ import { CartService } from '../../cart/cart-service';
     ])
   ]
 })
-export class DetailsFlightComponent implements OnInit, OnDestroy {
+export class DetailsFlightComponent implements OnInit {
   id = this.route.snapshot.params.id;
 
   constructor(
@@ -52,11 +52,10 @@ export class DetailsFlightComponent implements OnInit, OnDestroy {
 
   singleFlight: DetailedModel;
   orderFlight: CartFlightModel;
-  cartForm: FormGroup;
-  isCreator: boolean = false;
+  cartForm: FormGroup; //to purchase tickets
+  isCreator: boolean = false; //to show pencil.gif for editing
   subtotal: number;
   isAvailableSeats: boolean;
-  availableSeats: number;
 
   ngOnInit() {
     this.flightService.details(this.id).subscribe(res => {
@@ -64,36 +63,24 @@ export class DetailsFlightComponent implements OnInit, OnDestroy {
       if (res['_acl']['creator'] === this.auth.userId) {
         this.isCreator = true;
       }
-      localStorage.setItem('seats', `${res.seats}`);
-      this.availableSeats = Number(localStorage.getItem('seats'));
+      
       this.subtotal = this.singleFlight.cost
 
       this.cartForm = this.fb.group({
         numberOfTickets: ['1', [Validators.max(this.singleFlight.seats), Validators.min(1)]]
       });
-
-      // this.subtotal = this.singleFlight.cost;
       
       this.isAvailableSeats = this.singleFlight.seats > 0;
-      this.cartForm.valueChanges.subscribe(res => {
-        this.subtotal = res.numberOfTickets * this.singleFlight.cost;
-      });
-      // console.log(res['_acl']['creator']);
-    });
-  }
 
-  ngOnDestroy(){
-    localStorage.removeItem('seats');
+      this.cartForm.valueChanges.subscribe(response => {
+        this.subtotal = response.numberOfTickets * this.singleFlight.cost; // to update the subtotal field next to cartForm
+      });
+    });
   }
 
   buy(value) {
     let flightId = this.id;
     let tickets = value.numberOfTickets;
-
-    if (tickets >= this.availableSeats) {
-      tickets = this.availableSeats;
-    }
-    //this.singleFlight.seats -= tickets;
 
     const {
       destination,
@@ -121,10 +108,8 @@ export class DetailsFlightComponent implements OnInit, OnDestroy {
       tickets,
       subTotal
     };
-    // let updatedSeatsInModel = this.singleFlight;
 
     this.cartService.insertOrder(order);
-    //this.flightService.edit(flightId, order).subscribe();
     
     this.router.navigateByUrl('/flight/public');
   }
